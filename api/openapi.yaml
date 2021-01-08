@@ -1,0 +1,338 @@
+openapi: 3.0.0
+info:
+  title: Factorio Item Browser - Combination API
+  description:
+    This API provides access to the combination meta data of the Factorio Item Browser, including data availability and
+    the ability to calculate the combination id from mod names. This API does not contain any data from the mods besides
+    what is available on the Factorio Mod Portal.
+  contact:
+    name: BluePsyduck
+    email: bluepsyduck@gmx.com
+  version: draft
+servers:
+  - url: https://combination-api.factorio-item-browser.com/
+    description: Live API server
+tags:
+  - name: Combination
+    description: The requests related to the actual combinations of mods.
+  - name: Job
+    description: The requests related to export jobs of combinations.
+
+paths:
+  /status:
+    get:
+      summary: Provides the current status of the combination.
+      operationId: status
+      tags:
+        - Combination
+      parameters:
+        - $ref: "#/components/parameters/combination-id"
+        - $ref: "#/components/parameters/short-combination-id"
+        - $ref: "#/components/parameters/mod-names"
+      responses:
+        200:
+          description: The current status of the requested combination.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+
+  /validate:
+    post:
+      summary: Validates the combination against the mod portal to contain compatible and available mods.
+      operationId: validate
+      tags:
+        - Combination
+      parameters:
+        - $ref: "#/components/parameters/combination-id"
+        - $ref: "#/components/parameters/short-combination-id"
+        - $ref: "#/components/parameters/mod-names"
+      responses:
+        200:
+          description: The validation status of the combination.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isValid:
+                    type: boolean
+                    description: Whether the combination of mods is valid.
+                  mods:
+                    type: array
+                    description: The mods which have been validated.
+                    items:
+                      $ref: "#/components/schemas/ValidatedMod"
+
+  /jobs:
+    get:
+      summary: Provides a list of export jobs matching the filter criteria.
+      operationId: jobs
+      tags:
+        - Job
+      parameters:
+        - name: combination-id
+          in: query
+          description: The id of the combination to return the jobs from.
+          schema:
+            type: string
+          example: c7c9f039-65fe-4acf-b8f5-8eecafc44ec0
+        - name: status
+          in: query
+          description: The status of the jobs to return.
+          schema:
+            $ref: "#/components/schemas/jobStatus"
+        - name: order
+          in: query
+          description: The order in which to return the jobs.
+          schema:
+            type: string
+            enum:
+              - creationTime
+              - latest
+              - priority
+            default: priority
+        - name: limit
+          in: query
+          description: The maximal number of jobs to return.
+          schema:
+            type: number
+            default: 10
+      responses:
+        200:
+          description: The list of matched export jobs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobs:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Job"
+
+  /job:
+    post:
+      summary: Adds a new export job for a combination to be executed.
+      operationId: job.post
+      tags:
+        - Job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                combinationId:
+                  description: The id of the combination to create an export job for.
+                  type: string
+                  example: 2f4a45fa-a509-a9d1-aae6-ffcf984a7a76
+                priority:
+                  $ref: "#/components/schemas/jobPriority"
+              required:
+                - combinationId
+      responses:
+        200:
+          description: The newly created export job.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+
+  /job/{job-id}:
+    get:
+      summary: Provides the details to an export job.
+      operationId: job.get
+      tags:
+        - Job
+      parameters:
+        - $ref: "#/components/parameters/job-id"
+      responses:
+        200:
+          description: The details of the export job.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+
+    patch:
+      summary: Updates the status of an export job.
+      operationId: job.patch
+      tags:
+        - Job
+      parameters:
+        - $ref: "#/components/parameters/job-id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  $ref: "#/components/schemas/jobStatus"
+                errorMessage:
+                  description: The message of the error in case the export job failed.
+                  type: string
+              required:
+                - status
+      responses:
+        200:
+          description: The details of the updated export job.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+
+components:
+  parameters:
+    combination-id:
+      name: Combination-Id
+      in: header
+      description: The ID of the combination.
+      schema:
+        type: string
+      required: false
+      example: 2f4a45fa-a509-a9d1-aae6-ffcf984a7a76
+
+    short-combination-id:
+      name: Short-Combination-Id
+      in: header
+      description: The short ID of the combination.
+      schema:
+        type: string
+      required: false
+      example: 1reA6H5z4uFpotvegbLIr4
+
+    mod-names:
+      name: Mod-Names
+      in: header
+      description: The comma-separated names of the mods building the combination.
+      schema:
+        type: string
+      required: false
+      example: base
+
+    job-id:
+      name: job-id
+      in: path
+      description: The id of an export job.
+      schema:
+        type: string
+      required: true
+      example: c7c9f039-65fe-4acf-b8f5-8eecafc44ec0
+
+  schemas:
+    jobPriority:
+      description: The priority of the export job.
+      type: string
+      enum:
+        - admin
+        - user
+        - script
+      default: user
+
+    jobStatus:
+      description: The status of the export job.
+      type: string
+      enum:
+        - queued
+        - downloading
+        - processing
+        - uploading
+        - uploaded
+        - importing
+        - done
+        - error
+      example: done
+
+    Job:
+      description: The details of an export job.
+      type: object
+      properties:
+        id:
+          description: The id of the job.
+          type: string
+          example: 01234567-89ab-cdef-0123-456789abcdef
+        combinationId:
+          description: The id of the combination assined to the job.
+          type: string
+          example: 2f4a45fa-a509-a9d1-aae6-ffcf984a7a76
+        status:
+          $ref: "#/components/schemas/jobStatus"
+        errorMessage:
+          description: The message in case the job resulted in an error.
+          type: string
+          example: Internal server exception.
+        history:
+          description: The history of the status changes for the job.
+          type: array
+          items:
+            type: object
+            properties:
+              agent:
+                description: The agent which initiated the status change.
+                type: string
+                example: export-example
+              timestamp:
+                description: The timestamp of the status change.
+                type: string
+                format: datetime
+                example: "2038-01-19T03:14:07Z"
+              status:
+                $ref: "#/components/schemas/jobStatus"
+
+    Status:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the combination.
+          example: 2f4a45fa-a509-a9d1-aae6-ffcf984a7a76
+        shortId:
+          type: string
+          description: The short ID of the combination.
+          example: 1reA6H5z4uFpotvegbLIr4
+        modNames:
+          type: array
+          description: The names of the mods contained in the combination.
+          items:
+            type: string
+          example: ["base"]
+        isDataAvailable:
+          type: boolean
+          description: Whether the data of this combination is available in the Data API.
+          example: true
+
+    ValidatedMod:
+      type: object
+      properties:
+        name:
+          description: The name of the validated mod.
+          type: string
+          example: foo
+        version:
+          description: The version of the validated mod, if available.
+          type: string
+          example: "1.2.3"
+        problems:
+          description: The problems found with the mod.
+          type: array
+          items:
+            $ref: "#/components/schemas/ValidationProblem"
+
+    ValidationProblem:
+      type: object
+      properties:
+        type:
+          description: The type of problem which occured during validation.
+          type: string
+          enum:
+            - unknownMod
+            - noRelease
+            - missingDependency
+            - conflict
+          example: missingDependency
+        dependency:
+          description: The dependency for which the validation failed.
+          type: string
+          example: bar >= 2.0
