@@ -14,8 +14,10 @@
   "require": {
     "php": "^7.4 | ^8.0",
     "ext-json": "*",
+    "ext-pdo": "*",
     "bluepsyduck/laminas-autowire-factory": "^1.0",
     "doctrine/orm": "^2.6",
+    "factorio-item-browser/combination-api-client": "dev-master",
     "laminas/laminas-config-aggregator": "^1.4",
     "laminas/laminas-diactoros": "^2.5",
     "laminas/laminas-log": "^2.13",
