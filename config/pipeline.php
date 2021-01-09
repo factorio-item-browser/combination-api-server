@@ -34,7 +34,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
 //    $app->pipe(Middleware\AgentMiddleware::class);
 //    $app->pipe(Middleware\RequestDeserializerMiddleware::class);
-//    $app->pipe(Middleware\ResponseSerializerMiddleware::class);
+    $app->pipe(Middleware\ResponseSerializerMiddleware::class);
 
     $app->pipe(DispatchMiddleware::class);
     $app->pipe(Handler\NotFoundHandler::class);
