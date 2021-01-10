@@ -22,7 +22,7 @@ paths:
   /status:
     get:
       summary: Provides the current status of the combination.
-      operationId: status
+      operationId: combination.status
       tags:
         - Combination
       parameters:
@@ -40,7 +40,7 @@ paths:
   /validate:
     post:
       summary: Validates the combination against the mod portal to contain compatible and available mods.
-      operationId: validate
+      operationId: combination.validate
       tags:
         - Combination
       parameters:
@@ -302,6 +302,11 @@ components:
           type: boolean
           description: Whether the data of this combination is available in the Data API.
           example: true
+        exportTime:
+          type: string
+          format: datetime
+          description: The time when the combination was last exported.
+          example: 2038-01-19T03:14:07+00:00
 
     ValidatedMod:
       type: object

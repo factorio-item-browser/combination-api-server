@@ -23,6 +23,7 @@ $aggregator = new ConfigAggregator([
     // Include cache configuration
     new ArrayProvider($cacheConfig),
 
+    \FactorioItemBrowser\CombinationApi\Client\ConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
     \Laminas\Log\ConfigProvider::class,
     \Mezzio\ConfigProvider::class,

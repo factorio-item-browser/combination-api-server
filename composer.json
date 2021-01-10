@@ -27,7 +27,8 @@
     "mezzio/mezzio-helpers": "^5.4",
     "ramsey/uuid": "^4.1",
     "ramsey/uuid-doctrine": "^1.6",
-    "roave/psr-container-doctrine": "^2.2"
+    "roave/psr-container-doctrine": "^2.2",
+    "tuupola/base62": "^2.1"
   },
   "require-dev": {
     "bluepsyduck/test-helper": "^1.0",

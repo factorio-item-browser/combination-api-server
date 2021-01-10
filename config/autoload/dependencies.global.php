@@ -27,10 +27,18 @@ return [
         'factories' => [
             Handler\NotFoundHandler::class => AutoWireFactory::class,
 
+            Helper\CombinationIdCalculator::class => AutoWireFactory::class,
+
             Middleware\MetaMiddleware::class => AutoWireFactory::class,
             Middleware\ResponseSerializerMiddleware::class => AutoWireFactory::class,
 
+            Repository\CombinationRepository::class => AutoWireFactory::class,
+            Repository\ModRepository::class => AutoWireFactory::class,
+
             Response\ErrorResponseGenerator::class => AutoWireFactory::class,
+
+            Service\CombinationService::class => AutoWireFactory::class,
+            Service\ModService::class => AutoWireFactory::class,
 
             // 3rd-party dependencies
             EntityManagerInterface::class => EntityManagerFactory::class,
