@@ -13,4 +13,5 @@ namespace FactorioItemBrowser\CombinationApi\Server\Constant;
 interface RouteName
 {
     public const COMBINATION_STATUS = 'combination.status';
+    public const COMBINATION_VALIDATE = 'combination.validate';
 }

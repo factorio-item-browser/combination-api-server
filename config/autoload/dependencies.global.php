@@ -26,6 +26,7 @@ return [
         ],
         'factories' => [
             Handler\Combination\StatusHandler::class => AutoWireFactory::class,
+            Handler\Combination\ValidateHandler::class => AutoWireFactory::class,
             Handler\NotFoundHandler::class => AutoWireFactory::class,
 
             Helper\CombinationIdCalculator::class => AutoWireFactory::class,
@@ -41,7 +42,9 @@ return [
             Response\ErrorResponseGenerator::class => AutoWireFactory::class,
 
             Service\CombinationService::class => AutoWireFactory::class,
+            Service\ModPortalService::class => AutoWireFactory::class,
             Service\ModService::class => AutoWireFactory::class,
+            Service\ValidationService::class => AutoWireFactory::class,
 
             // 3rd-party dependencies
             EntityManagerInterface::class => EntityManagerFactory::class,

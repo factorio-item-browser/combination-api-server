@@ -88,6 +88,7 @@ class CombinationService
 
         if ($request->hasHeader(HeaderName::MOD_NAMES)) {
             $modNames = explode(',', $request->getHeaderLine(HeaderName::MOD_NAMES));
+            $modNames = array_map('trim', $modNames);
             return $this->getCombinationByModNames($modNames);
         }
 

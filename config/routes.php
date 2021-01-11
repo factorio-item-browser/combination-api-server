@@ -18,4 +18,5 @@ use Psr\Container\ContainerInterface;
 
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->get('/status', Handler\Combination\StatusHandler::class, RouteName::COMBINATION_STATUS);
+    $app->post('/validate', Handler\Combination\ValidateHandler::class, RouteName::COMBINATION_VALIDATE);
 };

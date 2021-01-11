@@ -15,9 +15,11 @@
     "php": "^7.4 | ^8.0",
     "ext-json": "*",
     "ext-pdo": "*",
+    "bluepsyduck/factorio-mod-portal-client": "^1.3",
     "bluepsyduck/laminas-autowire-factory": "^1.0",
     "bluepsyduck/mapper-manager": "dev-feature/generics",
     "doctrine/orm": "^2.6",
+    "factorio-item-browser/common": "^1.3",
     "factorio-item-browser/combination-api-client": "dev-master",
     "laminas/laminas-config-aggregator": "^1.4",
     "laminas/laminas-diactoros": "^2.5",
@@ -51,6 +53,12 @@
     }
   },
   "scripts": {
+    "build-cache": [
+      "rm -rf data/cache/*",
+      "bin/build-cache.php",
+      "vendor/bin/doctrine orm:generate-proxies",
+      "chown -R www-data:www-data data/cache/*"
+    ],
     "coverage-check": "coverage-check test/coverage/clover.xml 100",
     "phpcbf": "phpcbf -p --colors",
     "phpcs": "phpcs -p --colors",

@@ -23,6 +23,7 @@ $aggregator = new ConfigAggregator([
     // Include cache configuration
     new ArrayProvider($cacheConfig),
 
+    \BluePsyduck\FactorioModPortalClient\ConfigProvider::class,
     \BluePsyduck\MapperManager\ConfigProvider::class,
     \FactorioItemBrowser\CombinationApi\Client\ConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
