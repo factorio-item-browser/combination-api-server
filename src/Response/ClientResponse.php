@@ -26,10 +26,15 @@ class ClientResponse extends Response
      * @param int $statusCode
      * @param array<string, string> $headers
      */
-    public function __construct(object $payload, int $statusCode, array $headers)
+    public function __construct(object $payload, int $statusCode = 200, array $headers = [])
     {
         parent::__construct('php://memory', $statusCode, $this->injectContentType('application/json', $headers));
         $this->payload = $payload;
+    }
+
+    public function getPayload(): object
+    {
+        return $this->payload;
     }
 
     public function withSerializer(SerializerInterface $serializer): self

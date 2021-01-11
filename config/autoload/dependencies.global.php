@@ -25,9 +25,12 @@ return [
             ErrorResponseGenerator::class => Response\ErrorResponseGenerator::class,
         ],
         'factories' => [
+            Handler\Combination\StatusHandler::class => AutoWireFactory::class,
             Handler\NotFoundHandler::class => AutoWireFactory::class,
 
             Helper\CombinationIdCalculator::class => AutoWireFactory::class,
+
+            Mapper\StatusResponseMapper::class => AutoWireFactory::class,
 
             Middleware\MetaMiddleware::class => AutoWireFactory::class,
             Middleware\ResponseSerializerMiddleware::class => AutoWireFactory::class,

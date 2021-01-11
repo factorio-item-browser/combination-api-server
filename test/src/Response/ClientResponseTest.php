@@ -20,6 +20,7 @@ class ClientResponseTest extends TestCase
 {
     /**
      * @covers ::__construct
+     * @covers ::getPayload
      * @covers ::withSerializer
      */
     public function testWithSerializer(): void
@@ -39,6 +40,7 @@ class ClientResponseTest extends TestCase
         $instance = new ClientResponse($payload, $statusCode, $headers);
         $result = $instance->withSerializer($serializer);
 
+        $this->assertSame($payload, $instance->getPayload());
         $this->assertSame($statusCode, $result->getStatusCode());
         $this->assertSame('def', $result->getHeaderLine('abc'));
         $this->assertSame('application/json', $result->getHeaderLine('Content-Type'));

@@ -6,6 +6,7 @@ namespace FactorioItemBrowserTest\CombinationApi\Server\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
+use FactorioItemBrowser\CombinationApi\Server\Entity\Mod;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
 
@@ -42,5 +43,24 @@ class CombinationTest extends TestCase
 
         $this->assertSame($instance, $instance->setId($id));
         $this->assertSame($id, $instance->getId());
+    }
+
+    /**
+     * @covers ::getModNames
+     */
+    public function testGetModNames(): void
+    {
+        $mod1 = new Mod();
+        $mod1->setName('abc');
+        $mod2 = new Mod();
+        $mod2->setName('def');
+        $expectedResult = ['abc', 'def'];
+
+        $instance = new Combination();
+        $instance->getMods()->add($mod1);
+        $instance->getMods()->add($mod2);
+
+        $result = $instance->getModNames();
+        $this->assertEquals($expectedResult, $result);
     }
 }

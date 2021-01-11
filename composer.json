@@ -16,6 +16,7 @@
     "ext-json": "*",
     "ext-pdo": "*",
     "bluepsyduck/laminas-autowire-factory": "^1.0",
+    "bluepsyduck/mapper-manager": "dev-feature/generics",
     "doctrine/orm": "^2.6",
     "factorio-item-browser/combination-api-client": "dev-master",
     "laminas/laminas-config-aggregator": "^1.4",

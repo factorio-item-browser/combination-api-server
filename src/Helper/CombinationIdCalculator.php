@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Helper;
 
+use Exception;
+use FactorioItemBrowser\CombinationApi\Server\Exception\InvalidCombinationIdException;
+use FactorioItemBrowser\CombinationApi\Server\Exception\InvalidShortCombinationIdException;
+use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Tuupola\Base62;
@@ -39,21 +43,31 @@ class CombinationIdCalculator
      * Creates the combination id from its full string representation.
      * @param string $combinationId
      * @return UuidInterface
+     * @throws ServerException
      */
     public function fromId(string $combinationId): UuidInterface
     {
-        return Uuid::fromString($combinationId);
+        try {
+            return Uuid::fromString($combinationId);
+        } catch (Exception $e) {
+            throw new InvalidCombinationIdException($combinationId, $e);
+        }
     }
 
     /**
      * Creates the combination id from its short string representation.
      * @param string $shortCombinationId
      * @return UuidInterface
+     * @throws ServerException
      */
     public function fromShortId(string $shortCombinationId): UuidInterface
     {
-        $base62 = new Base62(['characters' => Base62::INVERTED]);
-        return Uuid::fromBytes(substr(str_pad($base62->decode($shortCombinationId), 16, "\0", STR_PAD_LEFT), -16));
+        try {
+            $decodedId = $this->base62->decode($shortCombinationId);
+            return Uuid::fromBytes(substr(str_pad($decodedId, 16, "\0", STR_PAD_LEFT), -16));
+        } catch (Exception $e) {
+            throw new InvalidShortCombinationIdException($shortCombinationId);
+        }
     }
 
     /**
@@ -63,8 +77,7 @@ class CombinationIdCalculator
      */
     public function toShortId(UuidInterface $combinationId): string
     {
-        $base62 = new Base62(['characters' => Base62::INVERTED]);
-        $shortId = $base62->encode($combinationId->getBytes());
+        $shortId = $this->base62->encode($combinationId->getBytes());
         return substr(str_pad($shortId, 22, '0', STR_PAD_LEFT), -22);
     }
 }

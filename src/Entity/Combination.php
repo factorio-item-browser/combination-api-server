@@ -48,6 +48,14 @@ class Combination
     }
 
     /**
+     * @return array<string>
+     */
+    public function getModNames(): array
+    {
+        return array_map(fn(Mod $mod): string => $mod->getName(), $this->getMods()->toArray());
+    }
+
+    /**
      * @return Collection<int, Job>
      */
     public function getJobs(): Collection
