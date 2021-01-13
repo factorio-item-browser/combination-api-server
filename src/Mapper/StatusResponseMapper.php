@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FactorioItemBrowser\CombinationApi\Server\Mapper;
 
 use BluePsyduck\MapperManager\Mapper\StaticMapperInterface;
-use FactorioItemBrowser\CombinationApi\Client\Response\StatusResponse;
+use FactorioItemBrowser\CombinationApi\Client\Response\Combination\StatusResponse;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Helper\CombinationIdCalculator;
 

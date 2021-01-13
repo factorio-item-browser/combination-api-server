@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FactorioItemBrowserTest\CombinationApi\Server\Handler\Combination;
 
 use BluePsyduck\MapperManager\MapperManagerInterface;
-use FactorioItemBrowser\CombinationApi\Client\Response\StatusResponse;
+use FactorioItemBrowser\CombinationApi\Client\Response\Combination\StatusResponse;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use FactorioItemBrowser\CombinationApi\Server\Handler\Combination\StatusHandler;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Handler\Combination;
 
-use FactorioItemBrowser\CombinationApi\Client\Response\ValidateResponse;
+use FactorioItemBrowser\CombinationApi\Client\Response\Combination\ValidateResponse;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use FactorioItemBrowser\CombinationApi\Server\Response\ClientResponse;
 use FactorioItemBrowser\CombinationApi\Server\Service\CombinationService;

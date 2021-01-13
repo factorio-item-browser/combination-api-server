@@ -67,7 +67,7 @@ paths:
   /jobs:
     get:
       summary: Provides a list of export jobs matching the filter criteria.
-      operationId: jobs
+      operationId: job.list
       tags:
         - Job
       parameters:
@@ -86,12 +86,7 @@ paths:
           in: query
           description: The order in which to return the jobs.
           schema:
-            type: string
-            enum:
-              - creationTime
-              - latest
-              - priority
-            default: priority
+            $ref: "#/components/schemas/listOrder"
         - name: limit
           in: query
           description: The maximal number of jobs to return.
@@ -114,7 +109,7 @@ paths:
   /job:
     post:
       summary: Adds a new export job for a combination to be executed.
-      operationId: job.post
+      operationId: job.create
       tags:
         - Job
       requestBody:
@@ -142,7 +137,7 @@ paths:
   /job/{job-id}:
     get:
       summary: Provides the details to an export job.
-      operationId: job.get
+      operationId: job.details
       tags:
         - Job
       parameters:
@@ -157,7 +152,7 @@ paths:
 
     patch:
       summary: Updates the status of an export job.
-      operationId: job.patch
+      operationId: job.update
       tags:
         - Job
       parameters:
@@ -245,6 +240,15 @@ components:
         - error
       example: done
 
+    listOrder:
+      description: The order of the job list.
+      type: string
+      enum:
+        - creation
+        - latest
+        - priority
+      default: priority
+
     Job:
       description: The details of an export job.
       type: object
@@ -260,17 +264,17 @@ components:
         status:
           $ref: "#/components/schemas/jobStatus"
         errorMessage:
-          description: The message in case the job resulted in an error.
+          description: The error message in case the job failed.
           type: string
           example: Internal server exception.
-        history:
-          description: The history of the status changes for the job.
+        changes:
+          description: The changes of the job.
           type: array
           items:
             type: object
             properties:
-              agent:
-                description: The agent which initiated the status change.
+              initiator:
+                description: The initiator of the status change.
                 type: string
                 example: export-example
               timestamp:

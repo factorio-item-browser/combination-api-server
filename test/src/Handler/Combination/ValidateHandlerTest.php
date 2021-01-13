@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowserTest\CombinationApi\Server\Handler\Combination;
 
-use FactorioItemBrowser\CombinationApi\Client\Response\ValidateResponse;
+use FactorioItemBrowser\CombinationApi\Client\Response\Combination\ValidateResponse;
 use FactorioItemBrowser\CombinationApi\Client\Transfer\ValidatedMod;
 use FactorioItemBrowser\CombinationApi\Client\Transfer\ValidationProblem;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
