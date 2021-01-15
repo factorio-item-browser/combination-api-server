@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowserTest\CombinationApi\Server\Service;
 
-use FactorioItemBrowser\CombinationApi\Server\Constant\HeaderName;
+use FactorioItemBrowser\CombinationApi\Client\Constant\HeaderName;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Mod;
 use FactorioItemBrowser\CombinationApi\Server\Exception\MissingCombinationHeaderException;
@@ -159,6 +159,32 @@ class CombinationServiceTest extends TestCase
 
         $instance = $this->createInstance();
         $result = $instance->getCombinationByModNames($modNames);
+
+        $this->assertSame($combination, $result);
+    }
+
+    /**
+     * @throws ServerException
+     * @covers ::getCombinationFromRequestValue
+     */
+    public function testGetCombinationFromRequestValue(): void
+    {
+        $requestValue = 'abc';
+        $combinationId = $this->createMock(UuidInterface::class);
+        $combination = $this->createMock(Combination::class);
+
+        $this->combinationIdCalculator->expects($this->once())
+                                      ->method('fromId')
+                                      ->with($this->identicalTo($requestValue))
+                                      ->willReturn($combinationId);
+
+        $this->combinationRepository->expects($this->once())
+                                    ->method('findById')
+                                    ->with($this->identicalTo($combinationId))
+                                    ->willReturn($combination);
+
+        $instance = $this->createInstance();
+        $result = $instance->getCombinationFromRequestValue($requestValue);
 
         $this->assertSame($combination, $result);
     }

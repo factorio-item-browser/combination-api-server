@@ -12,6 +12,8 @@
         </options>
 
         <id name="id" type="uuid_binary">
+            <generator strategy="CUSTOM" />
+            <custom-id-generator class="Ramsey\Uuid\Doctrine\UuidGenerator" />
             <options>
                 <option name="comment">The id of the job.</option>
             </options>
@@ -20,6 +22,12 @@
         <many-to-one field="combination" target-entity="Combination" inversed-by="jobs">
             <join-column name="combinationId" />
         </many-to-one>
+
+        <field name="priority" type="job_priority">
+            <options>
+                <option name="comment">The priority of the export job.</option>
+            </options>
+        </field>
 
         <field name="status" type="job_status">
             <options>

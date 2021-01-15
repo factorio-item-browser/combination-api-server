@@ -19,4 +19,9 @@ use Psr\Container\ContainerInterface;
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->get('/status', Handler\Combination\StatusHandler::class, RouteName::COMBINATION_STATUS);
     $app->post('/validate', Handler\Combination\ValidateHandler::class, RouteName::COMBINATION_VALIDATE);
+
+    $app->post('/job', Handler\Job\CreateHandler::class, RouteName::JOB_CREATE);
+    $app->get('/job/{job-id}', Handler\Job\DetailsHandler::class, RouteName::JOB_DETAILS);
+//    $app->patch('/job/{job-id}', Handler\Job\UpdateHandler::class, RouteName::JOB_UPDATE);
+    $app->get('/jobs', Handler\Job\ListHandler::class, RouteName::JOB_LIST);
 };

@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowserTest\CombinationApi\Server\Entity;
 
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
+use FactorioItemBrowser\CombinationApi\Client\Constant\JobStatus;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Job;
+use FactorioItemBrowser\CombinationApi\Server\Entity\JobChange;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
 
@@ -57,6 +60,19 @@ class JobTest extends TestCase
     }
 
     /**
+     * @covers ::getPriority
+     * @covers ::setPriority
+     */
+    public function testSetAndGetPriority(): void
+    {
+        $priority = 'abc';
+        $instance = new Job();
+
+        $this->assertSame($instance, $instance->setPriority($priority));
+        $this->assertSame($priority, $instance->getPriority());
+    }
+
+    /**
      * @covers ::getStatus
      * @covers ::setStatus
      */
@@ -70,19 +86,6 @@ class JobTest extends TestCase
     }
 
     /**
-     * @covers ::getPriority
-     * @covers ::setPriority
-     */
-    public function testSetAndGetPriority(): void
-    {
-        $priority = 42;
-        $instance = new Job();
-
-        $this->assertSame($instance, $instance->setPriority($priority));
-        $this->assertSame($priority, $instance->getPriority());
-    }
-
-    /**
      * @covers ::getErrorMessage
      * @covers ::setErrorMessage
      */
@@ -93,5 +96,39 @@ class JobTest extends TestCase
 
         $this->assertSame($instance, $instance->setErrorMessage($errorMessage));
         $this->assertSame($errorMessage, $instance->getErrorMessage());
+    }
+
+    /**
+     * @covers ::getCreationTime
+     */
+    public function testGetCreationTime(): void
+    {
+        $change1 = new JobChange();
+        $change1->setStatus(JobStatus::DONE)
+                ->setTimestamp(new DateTimeImmutable('2038-01-19 03:14:07+00:00'));
+
+        $change2 = new JobChange();
+        $change2->setStatus(JobStatus::QUEUED)
+                ->setTimestamp(new DateTimeImmutable('2038-01-19 02:14:07+00:00'));
+
+        $expectedResult = new DateTimeImmutable('2038-01-19 02:14:07+00:00');
+
+        $instance = new Job();
+        $instance->getChanges()->add($change1);
+        $instance->getChanges()->add($change2);
+
+        $result = $instance->getCreationTime();
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    /**
+     * @covers ::getCreationTime
+     */
+    public function testGetCreationTimeWithoutQueuedChange(): void
+    {
+        $instance = new Job();
+
+        $result = $instance->getCreationTime();
+        $this->assertInstanceOf(DateTimeImmutable::class, $result);
     }
 }

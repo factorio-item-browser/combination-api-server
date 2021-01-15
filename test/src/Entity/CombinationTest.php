@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowserTest\CombinationApi\Server\Entity;
 
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Mod;
@@ -43,6 +44,20 @@ class CombinationTest extends TestCase
 
         $this->assertSame($instance, $instance->setId($id));
         $this->assertSame($id, $instance->getId());
+    }
+
+    /**
+     * Tests the setting and getting the export time.
+     * @covers ::getExportTime
+     * @covers ::setExportTime
+     */
+    public function testSetAndGetExportTime(): void
+    {
+        $exportTime = new DateTimeImmutable('2038-01-19 03:14:07+00:00');
+        $instance = new Combination();
+
+        $this->assertSame($instance, $instance->setExportTime($exportTime));
+        $this->assertSame($exportTime, $instance->getExportTime());
     }
 
     /**

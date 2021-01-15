@@ -12,6 +12,8 @@
         </options>
 
         <id name="id" type="uuid_binary">
+            <generator strategy="CUSTOM" />
+            <custom-id-generator class="Ramsey\Uuid\Doctrine\UuidGenerator" />
             <options>
                 <option name="comment">The internal id of the job change.</option>
             </options>

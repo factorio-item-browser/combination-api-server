@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowserTest\CombinationApi\Server\Mapper;
 
+use DateTimeImmutable;
 use FactorioItemBrowser\CombinationApi\Client\Response\Combination\StatusResponse;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Mod;
@@ -48,6 +49,7 @@ class StatusResponseMapperTest extends TestCase
 
         $source = new Combination();
         $source->setId(Uuid::fromString($combinationId));
+        $source->setExportTime(new DateTimeImmutable('2038-01-19 03:14:07+00:00'));
         $source->getMods()->add($mod1);
         $source->getMods()->add($mod2);
 
@@ -55,7 +57,8 @@ class StatusResponseMapperTest extends TestCase
         $expectedDestination->id = '2f4a45fa-a509-a9d1-aae6-ffcf984a7a76';
         $expectedDestination->shortId = '1reA6H5z4uFpotvegbLIr4';
         $expectedDestination->modNames = ['abc', 'def'];
-        $expectedDestination->isDataAvailable = false;
+        $expectedDestination->isDataAvailable = true;
+        $expectedDestination->exportTime = new DateTimeImmutable('2038-01-19 03:14:07+00:00');
 
         $instance = new StatusResponseMapper(new CombinationIdCalculator());
         $instance->map($source, $destination);

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Service;
 
-use FactorioItemBrowser\CombinationApi\Server\Constant\HeaderName;
+use FactorioItemBrowser\CombinationApi\Client\Constant\HeaderName;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Exception\MissingCombinationHeaderException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
@@ -66,6 +66,17 @@ class CombinationService
 
         $mods = $this->modService->getMods($modNames);
         return $this->combinationRepository->create($combinationId, $mods);
+    }
+
+    /**
+     * Returns the combination from a value of the request.
+     * @param string $combinationId
+     * @return Combination
+     * @throws ServerException
+     */
+    public function getCombinationFromRequestValue(string $combinationId): Combination
+    {
+        return $this->getCombinationById($this->combinationIdCalculator->fromId($combinationId));
     }
 
     /**

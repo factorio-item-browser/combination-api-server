@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Exception;
 
-use FactorioItemBrowser\CombinationApi\Server\Constant\HeaderName;
+use FactorioItemBrowser\CombinationApi\Client\Constant\HeaderName;
 use Throwable;
 
 /**

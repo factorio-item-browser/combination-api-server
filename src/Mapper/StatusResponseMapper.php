@@ -45,6 +45,7 @@ class StatusResponseMapper implements StaticMapperInterface
         $destination->id = $source->getId()->toString();
         $destination->shortId = $this->combinationIdCalculator->toShortId($source->getId());
         $destination->modNames = $source->getModNames();
-        $destination->isDataAvailable = false;
+        $destination->isDataAvailable = $source->getExportTime() !== null;
+        $destination->exportTime = $source->getExportTime();
     }
 }

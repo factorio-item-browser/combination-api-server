@@ -17,7 +17,7 @@
     "ext-pdo": "*",
     "bluepsyduck/factorio-mod-portal-client": "^1.3",
     "bluepsyduck/laminas-autowire-factory": "^1.0",
-    "bluepsyduck/mapper-manager": "dev-feature/generics",
+    "bluepsyduck/mapper-manager": "^1.2",
     "doctrine/orm": "^2.6",
     "factorio-item-browser/common": "^1.3",
     "factorio-item-browser/combination-api-client": "dev-master",

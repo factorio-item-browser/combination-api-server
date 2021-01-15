@@ -35,8 +35,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Status"
-
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: The ID of the combination.
+                    example: "2f4a45fa-a509-a9d1-aae6-ffcf984a7a76"
+                  shortId:
+                    type: string
+                    description: The short ID of the combination.
+                    example: "1reA6H5z4uFpotvegbLIr4"
+                  modNames:
+                    type: array
+                    description: The names of the mods contained in the combination.
+                    items:
+                      type: string
+                    example: ["base"]
+                  isDataAvailable:
+                    type: boolean
+                    description: Whether the data of this combination is available in the Data API.
+                    example: true
+                  exportTime:
+                    type: string
+                    format: date-time
+                    description: The time when the combination was last exported.
+                    example: "2038-01-19T03:14:07+00:00"
   /validate:
     post:
       summary: Validates the combination against the mod portal to contain compatible and available mods.
@@ -260,57 +283,40 @@ components:
         combinationId:
           description: The id of the combination assined to the job.
           type: string
-          example: 2f4a45fa-a509-a9d1-aae6-ffcf984a7a76
+          example: "2f4a45fa-a509-a9d1-aae6-ffcf984a7a76"
+        priority:
+          $ref: "#/components/schemas/jobPriority"
         status:
           $ref: "#/components/schemas/jobStatus"
         errorMessage:
           description: The error message in case the job failed.
           type: string
           example: Internal server exception.
+        creationTime:
+          description: The creation time of the export job.
+          type: string
+          format: date-time
+          example: "2038-01-19T03:14:07+00:00"
         changes:
           description: The changes of the job.
           type: array
           items:
-            type: object
-            properties:
-              initiator:
-                description: The initiator of the status change.
-                type: string
-                example: export-example
-              timestamp:
-                description: The timestamp of the status change.
-                type: string
-                format: datetime
-                example: "2038-01-19T03:14:07Z"
-              status:
-                $ref: "#/components/schemas/jobStatus"
+            $ref: "#/components/schemas/JobChange"
 
-    Status:
+    JobChange:
       type: object
       properties:
-        id:
+        initiator:
+          description: The initiator of the status change.
           type: string
-          description: The ID of the combination.
-          example: 2f4a45fa-a509-a9d1-aae6-ffcf984a7a76
-        shortId:
-          type: string
-          description: The short ID of the combination.
-          example: 1reA6H5z4uFpotvegbLIr4
-        modNames:
-          type: array
-          description: The names of the mods contained in the combination.
-          items:
-            type: string
-          example: ["base"]
-        isDataAvailable:
-          type: boolean
-          description: Whether the data of this combination is available in the Data API.
-          example: true
-        exportTime:
+          example: export-example
+        timestamp:
+          description: The timestamp of the status change.
           type: string
           format: datetime
-          description: The time when the combination was last exported.
-          example: 2038-01-19T03:14:07+00:00
+          example: "2038-01-19T03:14:07+00:00"
+        status:
+          $ref: "#/components/schemas/jobStatus"
 
     ValidatedMod:
       type: object

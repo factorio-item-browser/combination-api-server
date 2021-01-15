@@ -16,6 +16,8 @@ use BluePsyduck\MapperManager\Constant\ConfigKey;
 return [
     ConfigKey::MAIN => [
         ConfigKey::MAPPERS => [
+            Mapper\JobChangeMapper::class,
+            Mapper\JobMapper::class,
             Mapper\StatusResponseMapper::class,
         ],
     ],

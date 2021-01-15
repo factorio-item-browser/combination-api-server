@@ -14,4 +14,8 @@ interface RouteName
 {
     public const COMBINATION_STATUS = 'combination.status';
     public const COMBINATION_VALIDATE = 'combination.validate';
+    public const JOB_CREATE = 'job.create';
+    public const JOB_DETAILS = 'job.details';
+    public const JOB_LIST = 'job.list';
+    public const JOB_UPDATE = 'job.update';
 }

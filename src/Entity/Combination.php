@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\UuidInterface;
@@ -17,6 +18,8 @@ use Ramsey\Uuid\UuidInterface;
 class Combination
 {
     private UuidInterface $id;
+    private ?DateTimeInterface $exportTime = null;
+
     /** @var Collection<int, Mod> */
     private Collection $mods;
     /** @var Collection<int, Job> */
@@ -37,6 +40,17 @@ class Combination
     public function getId(): UuidInterface
     {
         return $this->id;
+    }
+
+    public function setExportTime(?DateTimeInterface $exportTime): self
+    {
+        $this->exportTime = $exportTime;
+        return $this;
+    }
+
+    public function getExportTime(): ?DateTimeInterface
+    {
+        return $this->exportTime;
     }
 
     /**

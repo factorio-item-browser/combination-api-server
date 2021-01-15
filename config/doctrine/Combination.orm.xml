@@ -17,6 +17,12 @@
             </options>
         </id>
 
+        <field name="exportTime" type="datetime" nullable="true">
+            <options>
+                <option name="comment">The time when the combination was last exported.</option>
+            </options>
+        </field>
+
         <many-to-many field="mods" target-entity="Mod">
             <join-table name="CombinationXMod">
                 <join-columns>

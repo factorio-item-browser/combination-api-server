@@ -43,6 +43,7 @@ return [
             ],
         ],
         'types' => [
+            Doctrine\Type\JobPriorityType::NAME => Doctrine\Type\JobPriorityType::class,
             Doctrine\Type\JobStatusType::NAME => Doctrine\Type\JobStatusType::class,
             UuidBinaryType::NAME => UuidBinaryType::class,
         ],
