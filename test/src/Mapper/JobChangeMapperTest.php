@@ -15,14 +15,10 @@ use PHPUnit\Framework\TestCase;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Mapper\JobChangeMapper
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Mapper\JobChangeMapper
  */
 class JobChangeMapperTest extends TestCase
 {
-    /**
-     * @covers ::getSupportedDestinationClass
-     * @covers ::getSupportedSourceClass
-     */
     public function testMeta(): void
     {
         $instance = new JobChangeMapper();
@@ -31,9 +27,6 @@ class JobChangeMapperTest extends TestCase
         $this->assertSame(ClientJobChange::class, $instance->getSupportedDestinationClass());
     }
 
-    /**
-     * @covers ::map
-     */
     public function testMap(): void
     {
         $timestamp = new DateTimeImmutable('2038-01-19 03:14:07');

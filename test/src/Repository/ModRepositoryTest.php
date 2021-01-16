@@ -17,14 +17,10 @@ use Ramsey\Uuid\Uuid;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Repository\ModRepository
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Repository\ModRepository
  */
 class ModRepositoryTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::findByNames
-     */
     public function testFindByNames(): void
     {
         $modNames = ['abc', 'def'];
@@ -52,10 +48,6 @@ class ModRepositoryTest extends TestCase
         $this->assertSame($queryResult, $result);
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::create
-     */
     public function testCreate(): void
     {
         $modName = 'abc';

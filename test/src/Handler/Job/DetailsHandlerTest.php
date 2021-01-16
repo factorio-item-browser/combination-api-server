@@ -19,14 +19,12 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Handler\Job\DetailsHandler
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Handler\Job\DetailsHandler
  */
 class DetailsHandlerTest extends TestCase
 {
     /**
      * @throws ServerException
-     * @covers ::__construct
-     * @covers ::handle
      */
     public function testHandle(): void
     {

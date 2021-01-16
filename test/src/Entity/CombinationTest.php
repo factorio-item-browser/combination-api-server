@@ -16,15 +16,10 @@ use Ramsey\Uuid\UuidInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Entity\Combination
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Entity\Combination
  */
 class CombinationTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::getJobs
-     * @covers ::getMods
-     */
     public function testConstruct(): void
     {
         $instance = new Combination();
@@ -33,10 +28,6 @@ class CombinationTest extends TestCase
         $this->assertInstanceOf(ArrayCollection::class, $instance->getMods());
     }
 
-    /**
-     * @covers ::getId
-     * @covers ::setId
-     */
     public function testSetAndGetId(): void
     {
         $id = $this->createMock(UuidInterface::class);
@@ -46,11 +37,6 @@ class CombinationTest extends TestCase
         $this->assertSame($id, $instance->getId());
     }
 
-    /**
-     * Tests the setting and getting the export time.
-     * @covers ::getExportTime
-     * @covers ::setExportTime
-     */
     public function testSetAndGetExportTime(): void
     {
         $exportTime = new DateTimeImmutable('2038-01-19 03:14:07+00:00');
@@ -60,9 +46,6 @@ class CombinationTest extends TestCase
         $this->assertSame($exportTime, $instance->getExportTime());
     }
 
-    /**
-     * @covers ::getModNames
-     */
     public function testGetModNames(): void
     {
         $mod1 = new Mod();

@@ -18,14 +18,10 @@ use Ramsey\Uuid\Uuid;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Mapper\StatusResponseMapper
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Mapper\StatusResponseMapper
  */
 class StatusResponseMapperTest extends TestCase
 {
-    /**
-     * @covers ::getSupportedDestinationClass
-     * @covers ::getSupportedSourceClass
-     */
     public function testMeta(): void
     {
         $instance = new StatusResponseMapper($this->createMock(CombinationIdCalculator::class));
@@ -34,10 +30,6 @@ class StatusResponseMapperTest extends TestCase
         $this->assertSame(StatusResponse::class, $instance->getSupportedDestinationClass());
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::map
-     */
     public function testMap(): void
     {
         $combinationId = '2f4a45fa-a509-a9d1-aae6-ffcf984a7a76';

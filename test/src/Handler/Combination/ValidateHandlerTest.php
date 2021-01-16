@@ -21,7 +21,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Handler\Combination\ValidateHandler
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Handler\Combination\ValidateHandler
  */
 class ValidateHandlerTest extends TestCase
 {
@@ -50,8 +50,6 @@ class ValidateHandlerTest extends TestCase
      * @param array<ValidatedMod> $validatedMods
      * @param bool $isValid
      * @throws ServerException
-     * @covers ::__construct
-     * @covers ::handle
      * @dataProvider provideHandle
      */
     public function testHandle(array $validatedMods, bool $isValid): void

@@ -19,14 +19,10 @@ use PHPUnit\Framework\TestCase;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Service\ModPortalService
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Service\ModPortalService
  */
 class ModPortalServiceTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::requestMods
-     */
     public function testRequestMods(): void
     {
         $modNames = ['abc', 'def', 'ghi'];
@@ -67,9 +63,6 @@ class ModPortalServiceTest extends TestCase
         $this->assertEquals($expectedResult, $result);
     }
 
-    /**
-     * @covers ::selectLatestReleases
-     */
     public function testSelectLatestReleases(): void
     {
         $release1 = new Release();

@@ -13,6 +13,7 @@ use Throwable;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Exception\InvalidShortCombinationIdException
  */
 class InvalidShortCombinationIdExceptionTest extends TestCase
 {

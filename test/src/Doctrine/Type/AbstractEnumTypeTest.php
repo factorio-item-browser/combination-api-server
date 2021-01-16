@@ -13,13 +13,10 @@ use PHPUnit\Framework\TestCase;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Doctrine\Type\AbstractEnumType
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Doctrine\Type\AbstractEnumType
  */
 class AbstractEnumTypeTest extends TestCase
 {
-    /**
-     * @covers ::getSQLDeclaration
-     */
     public function testGetSQLDeclaration(): void
     {
         $expectedResult = 'ENUM("foo","bar")';
@@ -42,9 +39,6 @@ class AbstractEnumTypeTest extends TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    /**
-     * @covers ::getName
-     */
     public function testGetName(): void
     {
         $expectedResult = 'enum';
@@ -58,9 +52,6 @@ class AbstractEnumTypeTest extends TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    /**
-     * @covers ::requiresSQLCommentHint
-     */
     public function testRequiresSQLCommentHint(): void
     {
         $platform = $this->createMock(AbstractPlatform::class);

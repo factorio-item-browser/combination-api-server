@@ -14,15 +14,10 @@ use stdClass;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Response\ClientResponse
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Response\ClientResponse
  */
 class ClientResponseTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::getPayload
-     * @covers ::withSerializer
-     */
     public function testWithSerializer(): void
     {
         $payload = new stdClass();

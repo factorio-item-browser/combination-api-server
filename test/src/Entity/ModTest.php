@@ -13,14 +13,10 @@ use Ramsey\Uuid\UuidInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Entity\Mod
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Entity\Mod
  */
 class ModTest extends TestCase
 {
-    /**
-     * @covers ::getId
-     * @covers ::setId
-     */
     public function testSetAndGetId(): void
     {
         $id = $this->createMock(UuidInterface::class);
@@ -30,10 +26,6 @@ class ModTest extends TestCase
         $this->assertSame($id, $instance->getId());
     }
 
-    /**
-     * @covers ::getName
-     * @covers ::setName
-     */
     public function testSetAndGetName(): void
     {
         $name = 'abc';

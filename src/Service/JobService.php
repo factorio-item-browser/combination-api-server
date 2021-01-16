@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace FactorioItemBrowser\CombinationApi\Server\Service;
 
 use Exception;
+use FactorioItemBrowser\CombinationApi\Client\Constant\ParameterName;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Job;
 use FactorioItemBrowser\CombinationApi\Server\Exception\InvalidJobIdException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
@@ -46,5 +47,26 @@ class JobService
             throw new UnknownJobException($id);
         }
         return $job;
+    }
+
+    /**
+     * Returns the jobs matching the search criteria from the specified query parameters.
+     * @param array<string, string> $queryParams
+     * @return array<Job>
+     */
+    public function getJobsFromQueryParams(array $queryParams): array
+    {
+        try {
+            $combinationId = Uuid::fromString($queryParams[ParameterName::COMBINATION_ID] ?? '');
+        } catch (Exception $e) {
+            $combinationId = null;
+        }
+
+        return $this->jobRepository->findAll(
+            $combinationId,
+            $queryParams[ParameterName::STATUS] ?? '',
+            $queryParams[ParameterName::ORDER] ?? '',
+            (int) ($queryParams[ParameterName::LIMIT] ?? 10)
+        );
     }
 }

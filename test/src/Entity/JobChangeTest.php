@@ -15,14 +15,10 @@ use Ramsey\Uuid\UuidInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Entity\JobChange
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Entity\JobChange
  */
 class JobChangeTest extends TestCase
 {
-    /**
-     * @covers ::getId
-     * @covers ::setId
-     */
     public function testSetAndGetId(): void
     {
         $id = $this->createMock(UuidInterface::class);
@@ -32,10 +28,6 @@ class JobChangeTest extends TestCase
         $this->assertSame($id, $instance->getId());
     }
 
-    /**
-     * @covers ::getJob
-     * @covers ::setJob
-     */
     public function testSetAndGetJob(): void
     {
         $job = $this->createMock(Job::class);
@@ -45,10 +37,6 @@ class JobChangeTest extends TestCase
         $this->assertSame($job, $instance->getJob());
     }
 
-    /**
-     * @covers ::getInitiator
-     * @covers ::setInitiator
-     */
     public function testSetAndGetInitiator(): void
     {
         $initiator = 'abc';
@@ -58,10 +46,6 @@ class JobChangeTest extends TestCase
         $this->assertSame($initiator, $instance->getInitiator());
     }
 
-    /**
-     * @covers ::getStatus
-     * @covers ::setStatus
-     */
     public function testSetAndGetStatus(): void
     {
         $status = 'abc';
@@ -71,10 +55,6 @@ class JobChangeTest extends TestCase
         $this->assertSame($status, $instance->getStatus());
     }
 
-    /**
-     * @covers ::getTimestamp
-     * @covers ::setTimestamp
-     */
     public function testSetAndGetTimestamp(): void
     {
         $timestamp = $this->createMock(DateTimeImmutable::class);

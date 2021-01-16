@@ -13,7 +13,7 @@ use Throwable;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Exception\InvalidJobIdException
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Exception\InvalidJobIdException
  */
 class InvalidJobIdExceptionTest extends TestCase
 {

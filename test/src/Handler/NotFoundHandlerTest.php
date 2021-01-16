@@ -15,13 +15,12 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Handler\NotFoundHandler
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Handler\NotFoundHandler
  */
 class NotFoundHandlerTest extends TestCase
 {
     /**
      * @throws ServerException
-     * @covers ::handle
      */
     public function testHandle(): void
     {

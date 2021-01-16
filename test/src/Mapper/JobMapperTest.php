@@ -23,7 +23,7 @@ use stdClass;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Mapper\JobMapper
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Mapper\JobMapper
  */
 class JobMapperTest extends TestCase
 {
@@ -45,7 +45,6 @@ class JobMapperTest extends TestCase
      * @param object $source
      * @param object $destination
      * @param bool $expectedResult
-     * @covers ::supports
      * @dataProvider provideSupports
      */
     public function testSupports(object $source, object $destination, bool $expectedResult): void
@@ -56,9 +55,6 @@ class JobMapperTest extends TestCase
         $this->assertSame($expectedResult, $result);
     }
 
-    /**
-     * @covers ::map
-     */
     public function testMap(): void
     {
         $combination = new Combination();

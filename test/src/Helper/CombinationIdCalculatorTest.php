@@ -16,7 +16,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Helper\CombinationIdCalculator
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Helper\CombinationIdCalculator
  */
 class CombinationIdCalculatorTest extends TestCase
 {
@@ -34,8 +34,6 @@ class CombinationIdCalculatorTest extends TestCase
     /**
      * @param array<string> $modNames
      * @param string $expectedId
-     * @covers ::__construct
-     * @covers ::fromModNames
      * @dataProvider provideFromModNames
      */
     public function testFromModNames(array $modNames, string $expectedId): void
@@ -66,8 +64,6 @@ class CombinationIdCalculatorTest extends TestCase
      * @param string $combinationId
      * @param bool $expectException
      * @throws ServerException
-     * @covers ::__construct
-     * @covers ::fromId
      * @dataProvider provideFromId
      */
     public function testFromId(string $combinationId, bool $expectException): void
@@ -104,8 +100,6 @@ class CombinationIdCalculatorTest extends TestCase
      * @param string $expectedId
      * @param bool $expectException
      * @throws ServerException
-     * @covers ::__construct
-     * @covers ::fromShortId
      * @dataProvider provideFromShortId
      */
     public function testFromShortId(string $shortId, string $expectedId, bool $expectException): void
@@ -137,8 +131,6 @@ class CombinationIdCalculatorTest extends TestCase
     /**
      * @param string $combinationId
      * @param string $expectedResult
-     * @covers ::__construct
-     * @covers ::toShortId
      * @dataProvider provideToShortId
      */
     public function testToShortId(string $combinationId, string $expectedResult): void

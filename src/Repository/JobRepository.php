@@ -80,19 +80,19 @@ class JobRepository
 
         switch ($order) {
             case ListOrder::PRIORITY:
-                $queryBuilder//->addOrderBy('j.priority', 'ASC')
+                $queryBuilder->addOrderBy('j.priority', 'ASC')
                              ->addOrderBy('c2.timestamp', 'ASC')
                              ->addOrderBy('j.id', 'ASC');
                 break;
 
             case ListOrder::LATEST:
-                $queryBuilder//->addOrderBy('j.creationTime', 'DESC')
+                $queryBuilder->addOrderBy('c2.timestamp', 'DESC')
                              ->addOrderBy('j.id', 'ASC');
                 break;
 
             case ListOrder::CREATION:
             default:
-                $queryBuilder//->addOrderBy('j.creationTime', 'ASC')
+                $queryBuilder->addOrderBy('c2.timestamp', 'ASC')
                              ->addOrderBy('j.id', 'ASC');
                 break;
         }

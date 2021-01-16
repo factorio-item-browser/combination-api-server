@@ -24,7 +24,7 @@ use Ramsey\Uuid\UuidInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Service\CombinationService
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Service\CombinationService
  */
 class CombinationServiceTest extends TestCase
 {
@@ -54,8 +54,6 @@ class CombinationServiceTest extends TestCase
 
     /**
      * @throws ServerException
-     * @covers ::__construct
-     * @covers ::getCombinationById
      */
     public function testGetCombinationById(): void
     {
@@ -75,8 +73,6 @@ class CombinationServiceTest extends TestCase
 
     /**
      * @throws ServerException
-     * @covers ::__construct
-     * @covers ::getCombinationById
      */
     public function testGetCombinationByIdWithException(): void
     {
@@ -93,10 +89,6 @@ class CombinationServiceTest extends TestCase
         $instance->getCombinationById($combinationId);
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::getCombinationByModNames
-     */
     public function testGetCombinationByModNamesWithExistingCombination(): void
     {
         $modNames = ['abc', 'def'];
@@ -124,10 +116,6 @@ class CombinationServiceTest extends TestCase
         $this->assertSame($combination, $result);
     }
 
-    /**
-     * @covers ::__construct
-     * @covers ::getCombinationByModNames
-     */
     public function testGetCombinationByModNamesWithNewCombination(): void
     {
         $modNames = ['abc', 'def'];
@@ -165,7 +153,6 @@ class CombinationServiceTest extends TestCase
 
     /**
      * @throws ServerException
-     * @covers ::getCombinationFromRequestValue
      */
     public function testGetCombinationFromRequestValue(): void
     {
@@ -191,8 +178,6 @@ class CombinationServiceTest extends TestCase
 
     /**
      * @throws ServerException
-     * @covers ::__construct
-     * @covers ::getCombinationFromRequestHeader
      */
     public function testGetCombinationFromRequestHeaderWithCombinationId(): void
     {
@@ -220,7 +205,6 @@ class CombinationServiceTest extends TestCase
 
     /**
      * @throws ServerException
-     * @covers ::getCombinationFromRequestHeader
      */
     public function testGetCombinationFromRequestHeaderWithShortCombinationId(): void
     {
@@ -248,7 +232,6 @@ class CombinationServiceTest extends TestCase
 
     /**
      * @throws ServerException
-     * @covers ::getCombinationFromRequestHeader
      */
     public function testGetCombinationFromRequestHeader(): void
     {
@@ -277,7 +260,6 @@ class CombinationServiceTest extends TestCase
 
     /**
      * @throws ServerException
-     * @covers ::getCombinationFromRequestHeader
      */
     public function testGetCombinationFromRequestHeaderWithMissingHeader(): void
     {

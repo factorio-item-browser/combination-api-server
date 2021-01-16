@@ -15,14 +15,10 @@ use Psr\Http\Server\RequestHandlerInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Middleware\MetaMiddleware
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Middleware\MetaMiddleware
  */
 class MetaMiddlewareTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::process
-     */
     public function testProcess(): void
     {
         $version = '1.2.3';

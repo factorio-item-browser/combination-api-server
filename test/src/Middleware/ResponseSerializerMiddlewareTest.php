@@ -17,6 +17,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Middleware\ResponseSerializerMiddleware
  */
 class ResponseSerializerMiddlewareTest extends TestCase
 {

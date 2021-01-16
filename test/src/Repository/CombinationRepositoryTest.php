@@ -19,14 +19,10 @@ use Ramsey\Uuid\UuidInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @coversDefaultClass \FactorioItemBrowser\CombinationApi\Server\Repository\CombinationRepository
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Repository\CombinationRepository
  */
 class CombinationRepositoryTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::findById
-     */
     public function testFindById(): void
     {
         $combinationId = $this->createMock(UuidInterface::class);
@@ -56,9 +52,6 @@ class CombinationRepositoryTest extends TestCase
         $this->assertSame($combination, $result);
     }
 
-    /**
-     * @covers ::findById
-     */
     public function testFindByIdWithException(): void
     {
         $combinationId = $this->createMock(UuidInterface::class);
@@ -87,9 +80,6 @@ class CombinationRepositoryTest extends TestCase
         $this->assertNull($result);
     }
 
-    /**
-     * @covers ::create
-     */
     public function testCreate(): void
     {
         $combinationId = $this->createMock(UuidInterface::class);
