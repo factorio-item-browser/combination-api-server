@@ -6,6 +6,7 @@ namespace FactorioItemBrowser\CombinationApi\Server\Service;
 
 use Exception;
 use FactorioItemBrowser\CombinationApi\Client\Constant\ParameterName;
+use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Job;
 use FactorioItemBrowser\CombinationApi\Server\Exception\InvalidJobIdException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
@@ -68,5 +69,28 @@ class JobService
             $queryParams[ParameterName::ORDER] ?? '',
             (int) ($queryParams[ParameterName::LIMIT] ?? 10)
         );
+    }
+
+    /**
+     * Creates a new export job for the specified combination.
+     * @param Combination $combination
+     * @param string $priority
+     * @return Job
+     */
+    public function createJobForCombination(Combination $combination, string $priority): Job
+    {
+        return $this->jobRepository->create($combination, 'test', $priority); // @todo replace initiator
+    }
+
+    /**
+     * Changes the job to have the specified status and error message.
+     * @param Job $job
+     * @param string $status
+     * @param string $errorMessage
+     */
+    public function changeJob(Job $job, string $status, string $errorMessage): void
+    {
+        $job->setErrorMessage($errorMessage);
+        $this->jobRepository->addChange($job, 'test', $status); // @todo replace initiator
     }
 }

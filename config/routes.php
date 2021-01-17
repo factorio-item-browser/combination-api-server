@@ -22,6 +22,6 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
     $app->post('/job', Handler\Job\CreateHandler::class, RouteName::JOB_CREATE);
     $app->get('/job/{job-id}', Handler\Job\DetailsHandler::class, RouteName::JOB_DETAILS);
-//    $app->patch('/job/{job-id}', Handler\Job\UpdateHandler::class, RouteName::JOB_UPDATE);
+    $app->patch('/job/{job-id}', Handler\Job\UpdateHandler::class, RouteName::JOB_UPDATE);
     $app->get('/jobs', Handler\Job\ListHandler::class, RouteName::JOB_LIST);
 };

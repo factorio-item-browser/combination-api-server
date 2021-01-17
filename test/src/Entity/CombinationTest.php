@@ -6,7 +6,9 @@ namespace FactorioItemBrowserTest\CombinationApi\Server\Entity;
 
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
+use FactorioItemBrowser\CombinationApi\Client\Constant\JobStatus;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
+use FactorioItemBrowser\CombinationApi\Server\Entity\Job;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Mod;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
@@ -60,5 +62,44 @@ class CombinationTest extends TestCase
 
         $result = $instance->getModNames();
         $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testGetUnfinishedJob(): void
+    {
+        $job1 = new Job();
+        $job1->setStatus(JobStatus::DONE);
+        $job2 = new Job();
+        $job2->setStatus(JobStatus::ERROR);
+        $job3 = new Job();
+        $job3->setStatus(JobStatus::QUEUED);
+        $job4 = new Job();
+        $job4->setStatus(JobStatus::DONE);
+
+        $instance = new Combination();
+        $instance->getJobs()->add($job1);
+        $instance->getJobs()->add($job2);
+        $instance->getJobs()->add($job3);
+        $instance->getJobs()->add($job4);
+
+        $result = $instance->getUnfinishedJob();
+        $this->assertSame($job3, $result);
+    }
+
+    public function testGetUnfinishedJobWithoutJob(): void
+    {
+        $job1 = new Job();
+        $job1->setStatus(JobStatus::DONE);
+        $job2 = new Job();
+        $job2->setStatus(JobStatus::ERROR);
+        $job3 = new Job();
+        $job3->setStatus(JobStatus::DONE);
+
+        $instance = new Combination();
+        $instance->getJobs()->add($job1);
+        $instance->getJobs()->add($job2);
+        $instance->getJobs()->add($job3);
+
+        $result = $instance->getUnfinishedJob();
+        $this->assertNull($result);
     }
 }

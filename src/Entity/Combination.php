@@ -7,6 +7,7 @@ namespace FactorioItemBrowser\CombinationApi\Server\Entity;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use FactorioItemBrowser\CombinationApi\Client\Constant\JobStatus;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -75,5 +76,21 @@ class Combination
     public function getJobs(): Collection
     {
         return $this->jobs;
+    }
+
+    /**
+     * Returns the currently not finished export job of the combination, if it already exists.
+     * @return Job|null
+     */
+    public function getUnfinishedJob(): ?Job
+    {
+        foreach ($this->jobs as $job) {
+            /* @var Job $job */
+            if ($job->getStatus() !== JobStatus::DONE && $job->getStatus() !== JobStatus::ERROR) {
+                return $job;
+            }
+        }
+
+        return null;
     }
 }

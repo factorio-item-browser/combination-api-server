@@ -31,6 +31,7 @@ return [
             Handler\Job\CreateHandler::class => AutoWireFactory::class,
             Handler\Job\DetailsHandler::class => AutoWireFactory::class,
             Handler\Job\ListHandler::class => AutoWireFactory::class,
+            Handler\Job\UpdateHandler::class => AutoWireFactory::class,
             Handler\NotFoundHandler::class => AutoWireFactory::class,
 
             Helper\CombinationIdCalculator::class => AutoWireFactory::class,
