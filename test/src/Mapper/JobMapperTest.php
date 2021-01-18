@@ -13,6 +13,7 @@ use FactorioItemBrowser\CombinationApi\Client\Transfer\JobChange as ClientJobCha
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Job as DatabaseJob;
 use FactorioItemBrowser\CombinationApi\Server\Entity\JobChange as DatabaseJobChange;
+use FactorioItemBrowser\CombinationApi\Server\Helper\QueuePositionHelper;
 use FactorioItemBrowser\CombinationApi\Server\Mapper\JobMapper;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
@@ -49,7 +50,7 @@ class JobMapperTest extends TestCase
      */
     public function testSupports(object $source, object $destination, bool $expectedResult): void
     {
-        $instance = new JobMapper();
+        $instance = new JobMapper($this->createMock(QueuePositionHelper::class));
         $result = $instance->supports($source, $destination);
 
         $this->assertSame($expectedResult, $result);
@@ -105,7 +106,12 @@ class JobMapperTest extends TestCase
                           $clientJobChange2,
                       );
 
-        $instance = new JobMapper();
+        $queuePositionHelper = $this->createMock(QueuePositionHelper::class);
+        $queuePositionHelper->expects($this->once())
+                            ->method('injectQueuePosition')
+                            ->with($this->equalTo($expectedDestination));
+
+        $instance = new JobMapper($queuePositionHelper);
         $instance->setMapperManager($mapperManager);
         $instance->map($source, $destination);
 

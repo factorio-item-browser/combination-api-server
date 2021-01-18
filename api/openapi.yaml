@@ -61,6 +61,11 @@ paths:
                     format: date-time
                     description: The time when the combination was last exported.
                     example: "2038-01-19T03:14:07+00:00"
+                required:
+                  - id
+                  - shortId
+                  - modNames
+                  - isDataAvailable
   /validate:
     post:
       summary: Validates the combination against the mod portal to contain compatible and available mods.
@@ -88,6 +93,9 @@ paths:
                     description: The mods which have been validated.
                     items:
                       $ref: "#/components/schemas/ValidatedMod"
+                required:
+                  - isValid
+                  - mods
 
   /jobs:
     get:
@@ -131,6 +139,8 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Job"
+                required:
+                  - jobs
 
   /job:
     post:
@@ -303,6 +313,10 @@ components:
           $ref: "#/components/schemas/jobPriority"
         status:
           $ref: "#/components/schemas/jobStatus"
+        queuePosition:
+          description: The current position of the job in the queue.
+          type: integer
+          example: 42
         errorMessage:
           description: The error message in case the job failed.
           type: string

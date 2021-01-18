@@ -35,6 +35,7 @@ return [
             Handler\NotFoundHandler::class => AutoWireFactory::class,
 
             Helper\CombinationIdCalculator::class => AutoWireFactory::class,
+            Helper\QueuePositionHelper::class => AutoWireFactory::class,
 
             Mapper\JobChangeMapper::class => AutoWireFactory::class,
             Mapper\JobMapper::class => AutoWireFactory::class,

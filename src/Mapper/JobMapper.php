@@ -11,6 +11,7 @@ use FactorioItemBrowser\CombinationApi\Client\Transfer\Job as ClientJob;
 use FactorioItemBrowser\CombinationApi\Client\Transfer\JobChange as ClientJobChange;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Job as DatabaseJob;
 use FactorioItemBrowser\CombinationApi\Server\Entity\JobChange as DatabaseJobChange;
+use FactorioItemBrowser\CombinationApi\Server\Helper\QueuePositionHelper;
 
 /**
  * The mapper of the job.
@@ -23,6 +24,13 @@ use FactorioItemBrowser\CombinationApi\Server\Entity\JobChange as DatabaseJobCha
 class JobMapper implements DynamicMapperInterface, MapperManagerAwareInterface
 {
     use MapperManagerAwareTrait;
+
+    private QueuePositionHelper $queuePositionHelper;
+
+    public function __construct(QueuePositionHelper $queuePositionHelper)
+    {
+        $this->queuePositionHelper = $queuePositionHelper;
+    }
 
     public function supports(object $source, object $destination): bool
     {
@@ -44,5 +52,7 @@ class JobMapper implements DynamicMapperInterface, MapperManagerAwareInterface
         $destination->changes = array_map(function (DatabaseJobChange $change): ClientJobChange {
             return $this->mapperManager->map($change, new ClientJobChange());
         }, $source->getChanges()->toArray());
+
+        $this->queuePositionHelper->injectQueuePosition($destination);
     }
 }
