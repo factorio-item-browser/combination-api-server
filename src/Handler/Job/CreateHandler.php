@@ -46,6 +46,7 @@ class CreateHandler implements RequestHandlerInterface
     {
         /** @var CreateRequest $clientRequest */
         $clientRequest = $request->getParsedBody();
+
         $combination = $this->combinationService->getCombinationFromRequestValue($clientRequest->combinationId);
 
         $job = $combination->getUnfinishedJob();

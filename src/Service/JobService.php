@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Service;
 
+use DateTimeImmutable;
 use Exception;
+use FactorioItemBrowser\CombinationApi\Client\Constant\JobStatus;
 use FactorioItemBrowser\CombinationApi\Client\Constant\ParameterName;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Job;
+use FactorioItemBrowser\CombinationApi\Server\Exception\ActionNotAllowedException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\InvalidJobIdException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\UnknownJobException;
+use FactorioItemBrowser\CombinationApi\Server\Repository\AgentRepository;
 use FactorioItemBrowser\CombinationApi\Server\Repository\JobRepository;
 use Ramsey\Uuid\Uuid;
 
@@ -22,10 +26,12 @@ use Ramsey\Uuid\Uuid;
  */
 class JobService
 {
+    private AgentRepository $agentRepository;
     private JobRepository $jobRepository;
 
-    public function __construct(JobRepository $jobRepository)
+    public function __construct(AgentRepository $agentRepository, JobRepository $jobRepository)
     {
+        $this->agentRepository = $agentRepository;
         $this->jobRepository = $jobRepository;
     }
 
@@ -76,10 +82,16 @@ class JobService
      * @param Combination $combination
      * @param string $priority
      * @return Job
+     * @throws ServerException
      */
     public function createJobForCombination(Combination $combination, string $priority): Job
     {
-        return $this->jobRepository->create($combination, 'test', $priority); // @todo replace initiator
+        $agent = $this->agentRepository->getCurrentAgent();
+        if (!$agent->getCanCreateJobs()) {
+            throw new ActionNotAllowedException();
+        }
+
+        return $this->jobRepository->create($combination, $agent->getName(), $priority);
     }
 
     /**
@@ -87,10 +99,20 @@ class JobService
      * @param Job $job
      * @param string $status
      * @param string $errorMessage
+     * @throws ServerException
      */
     public function changeJob(Job $job, string $status, string $errorMessage): void
     {
+        $agent = $this->agentRepository->getCurrentAgent();
+        if (!$agent->getCanUpdateJobs()) {
+            throw new ActionNotAllowedException();
+        }
+
         $job->setErrorMessage($errorMessage);
-        $this->jobRepository->addChange($job, 'test', $status); // @todo replace initiator
+        if ($status === JobStatus::DONE) {
+            $job->getCombination()->setExportTime(new DateTimeImmutable());
+        }
+
+        $this->jobRepository->addChange($job, $agent->getName(), $status);
     }
 }

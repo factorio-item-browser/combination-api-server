@@ -26,6 +26,7 @@ paths:
       tags:
         - Combination
       parameters:
+        - $ref: "#/components/parameters/api-key"
         - $ref: "#/components/parameters/combination-id"
         - $ref: "#/components/parameters/short-combination-id"
         - $ref: "#/components/parameters/mod-names"
@@ -67,6 +68,7 @@ paths:
       tags:
         - Combination
       parameters:
+        - $ref: "#/components/parameters/api-key"
         - $ref: "#/components/parameters/combination-id"
         - $ref: "#/components/parameters/short-combination-id"
         - $ref: "#/components/parameters/mod-names"
@@ -94,6 +96,7 @@ paths:
       tags:
         - Job
       parameters:
+        - $ref: "#/components/parameters/api-key"
         - name: combination-id
           in: query
           description: The id of the combination to return the jobs from.
@@ -135,6 +138,8 @@ paths:
       operationId: job.create
       tags:
         - Job
+      parameters:
+        - $ref: "#/components/parameters/api-key"
       requestBody:
         content:
           application/json:
@@ -179,6 +184,7 @@ paths:
       tags:
         - Job
       parameters:
+        - $ref: "#/components/parameters/api-key"
         - $ref: "#/components/parameters/job-id"
       requestBody:
         content:
@@ -203,6 +209,15 @@ paths:
 
 components:
   parameters:
+    api-key:
+      name: Api-Key
+      in: header
+      description: The API key required to use this endpoint.
+      schema:
+        type: string
+      required: true
+      example: abc
+
     combination-id:
       name: Combination-Id
       in: header

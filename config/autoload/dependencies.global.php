@@ -40,10 +40,12 @@ return [
             Mapper\JobMapper::class => AutoWireFactory::class,
             Mapper\StatusResponseMapper::class => AutoWireFactory::class,
 
+            Middleware\AgentMiddleware::class => AutoWireFactory::class,
             Middleware\MetaMiddleware::class => AutoWireFactory::class,
             Middleware\RequestDeserializerMiddleware::class => AutoWireFactory::class,
             Middleware\ResponseSerializerMiddleware::class => AutoWireFactory::class,
 
+            Repository\AgentRepository::class => AutoWireFactory::class,
             Repository\CombinationRepository::class => AutoWireFactory::class,
             Repository\JobRepository::class => AutoWireFactory::class,
             Repository\ModRepository::class => AutoWireFactory::class,
@@ -62,6 +64,7 @@ return [
 
             // Auto-wire helpers
             'array $requestClassesByRoutes' => readConfig(ConfigKey::MAIN, ConfigKey::REQUEST_CLASSES_BY_ROUTES),
+            'array $agents' => readConfig(ConfigKey::MAIN, ConfigKey::AGENTS),
             'bool $debug' => readConfig('debug'),
             'string $version' => readConfig('version'),
         ],

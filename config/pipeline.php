@@ -32,7 +32,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->pipe(ImplicitHeadMiddleware::class);
     $app->pipe(ImplicitOptionsMiddleware::class);
 
-//    $app->pipe(Middleware\AgentMiddleware::class);
+    $app->pipe(Middleware\AgentMiddleware::class);
     $app->pipe(Middleware\RequestDeserializerMiddleware::class);
     $app->pipe(Middleware\ResponseSerializerMiddleware::class);
 

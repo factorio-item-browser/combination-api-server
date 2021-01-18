@@ -112,14 +112,11 @@ class JobRepository
     {
         $job = new Job();
         $job->setCombination($combination)
-            ->setStatus(JobStatus::QUEUED)
             ->setPriority($priority)
             ->setErrorMessage('');
 
-        $this->entityManager->persist($job);
-        $this->entityManager->flush();
-
         $this->addChange($job, $initiator, JobStatus::QUEUED);
+
         return $job;
     }
 
