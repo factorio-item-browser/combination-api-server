@@ -22,23 +22,22 @@ use FactorioItemBrowser\Common\Constant\Constant;
 class ValidationService
 {
     private ModPortalService $modPortalService;
-    private Version $factorioVersion;
 
-    public function __construct(ModPortalService $modPortalService, Version $factorioVersion)
+    public function __construct(ModPortalService $modPortalService)
     {
         $this->modPortalService = $modPortalService;
-        $this->factorioVersion = $factorioVersion;
     }
 
     /**
      * Validates the mod names regarding whether they are compatible to each other using their latest releases.
      * @param array<string> $modNames
+     * @param Version $factorioVersion
      * @return array<string, ValidatedMod>
      */
-    public function validate(array $modNames): array
+    public function validate(array $modNames, Version $factorioVersion): array
     {
         $mods = $this->modPortalService->requestMods($modNames);
-        $releases = $this->modPortalService->selectLatestReleases($mods, $this->factorioVersion);
+        $releases = $this->modPortalService->selectLatestReleases($mods, $factorioVersion);
 
         $validatedMods = [];
         foreach ($modNames as $modName) {
@@ -50,7 +49,7 @@ class ValidationService
             $release = $releases[$modName] ?? null;
 
             if ($modName === Constant::MOD_NAME_BASE) {
-                $validatedMod->version = (string) $this->factorioVersion;
+                $validatedMod->version = (string) $factorioVersion;
                 continue;
             }
 

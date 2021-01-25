@@ -153,8 +153,8 @@ class ValidationServiceTest extends TestCase
                          ->with($this->identicalTo($mods), $this->identicalTo($factorioVersion))
                          ->willReturn($releases);
 
-        $instance = new ValidationService($modPortalService, $factorioVersion);
-        $result = $instance->validate($modNames);
+        $instance = new ValidationService($modPortalService);
+        $result = $instance->validate($modNames, $factorioVersion);
 
         $this->assertEquals($expectedResult, $result);
     }

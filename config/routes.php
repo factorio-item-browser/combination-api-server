@@ -6,6 +6,7 @@
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
  */
+// phpcs:ignoreFile
 
 declare(strict_types=1);
 
@@ -18,7 +19,7 @@ use Psr\Container\ContainerInterface;
 
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->get('/status', Handler\Combination\StatusHandler::class, RouteName::COMBINATION_STATUS);
-    $app->post('/validate', Handler\Combination\ValidateHandler::class, RouteName::COMBINATION_VALIDATE);
+    $app->post('/validate/{factorio-version}', Handler\Combination\ValidateHandler::class, RouteName::COMBINATION_VALIDATE);
 
     $app->post('/job', Handler\Job\CreateHandler::class, RouteName::JOB_CREATE);
     $app->get('/job/{job-id}', Handler\Job\DetailsHandler::class, RouteName::JOB_DETAILS);

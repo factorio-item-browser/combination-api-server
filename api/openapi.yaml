@@ -22,6 +22,10 @@ paths:
   /status:
     get:
       summary: Provides the current status of the combination.
+      description: |
+        This request requires one of the three header lines to identify the combination: Either the full Combination-Id,
+        its short variant as Short-Combination-Id, or a comma-separated list of the mod-names. Note that a combination
+        must be requested through its mod names once before it is accessible through its ids.
       operationId: combination.status
       tags:
         - Combination
@@ -66,9 +70,17 @@ paths:
                   - shortId
                   - modNames
                   - isDataAvailable
-  /validate:
+  /validate/{factorio-version}:
     post:
       summary: Validates the combination against the mod portal to contain compatible and available mods.
+      description: |
+        This request will load the meta data of all mods from the Factorio Mod Portal and check whether all mods are
+        compatible to each other. This includes checking that mandatory dependencies are included in the mod list, and
+        that no conflicts are present.
+
+        The API will always use the latest possible version of a mod. It will NOT check older versions which may be
+        valid. The request contains the Factorio version: This version is used to select the latest version of the mods,
+        to e.g. exclude mods only compatible to experimental versions of the game.
       operationId: combination.validate
       tags:
         - Combination
@@ -77,6 +89,7 @@ paths:
         - $ref: "#/components/parameters/combination-id"
         - $ref: "#/components/parameters/short-combination-id"
         - $ref: "#/components/parameters/mod-names"
+        - $ref: "#/components/parameters/factorio-version"
       responses:
         200:
           description: The validation status of the combination.
@@ -145,6 +158,9 @@ paths:
   /job:
     post:
       summary: Adds a new export job for a combination to be executed.
+      description: |
+        This request creates a new export job for the given combination, and places it into the queue. If the
+        combination already has a not-finished export job, no new job is created.
       operationId: job.create
       tags:
         - Job
@@ -254,6 +270,15 @@ components:
         type: string
       required: false
       example: base
+
+    factorio-version:
+      name: factorio-version
+      in: path
+      description: The version of Factorio to validate the mods for.
+      schema:
+        type: string
+      required: true
+      example: "1.2.3"
 
     job-id:
       name: job-id

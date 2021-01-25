@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server;
 
-use BluePsyduck\FactorioModPortalClient\Entity\Version;
 use BluePsyduck\LaminasAutoWireFactory\AutoWireFactory;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ServiceManager\Config;
@@ -26,7 +25,6 @@ $container = new ServiceManager();
 
 // Inject config
 $container->setService('config', $config);
-$container->setService(Version::class . ' $factorioVersion', new Version('1.0.0'));  // @todo Put somewhere else
 
 if ($config[ConfigAggregator::ENABLE_CACHE] ?? false) {
     AutoWireFactory::setCacheFile(__DIR__ . '/../data/cache/autowire-factory-cache.php');

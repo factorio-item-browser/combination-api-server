@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Handler\Combination;
 
+use BluePsyduck\FactorioModPortalClient\Entity\Version;
 use FactorioItemBrowser\CombinationApi\Client\Response\Combination\ValidateResponse;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use FactorioItemBrowser\CombinationApi\Server\Response\ClientResponse;
@@ -38,9 +39,10 @@ class ValidateHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $combination = $this->combinationService->getCombinationFromRequestHeader($request);
+        $factorioVersion = new Version($request->getAttribute('factorio-version'));
 
         $response = new ValidateResponse();
-        $response->mods = $this->validationService->validate($combination->getModNames());
+        $response->mods = $this->validationService->validate($combination->getModNames(), $factorioVersion);
 
         $response->isValid = true;
         foreach ($response->mods as $mod) {

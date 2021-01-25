@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowserTest\CombinationApi\Server\Handler\Combination;
 
+use BluePsyduck\FactorioModPortalClient\Entity\Version;
 use FactorioItemBrowser\CombinationApi\Client\Response\Combination\ValidateResponse;
 use FactorioItemBrowser\CombinationApi\Client\Transfer\ValidatedMod;
 use FactorioItemBrowser\CombinationApi\Client\Transfer\ValidationProblem;
@@ -55,7 +56,14 @@ class ValidateHandlerTest extends TestCase
     public function testHandle(array $validatedMods, bool $isValid): void
     {
         $modNames = ['abc', 'def'];
+        $factorioVersion = new Version('1.2.3');
+
         $request = $this->createMock(ServerRequestInterface::class);
+        $request->expects($this->once())
+                ->method('getAttribute')
+                ->with($this->identicalTo('factorio-version'))
+                ->willReturn('1.2.3');
+
         $combination = $this->createMock(Combination::class);
         $combination->expects($this->once())
                     ->method('getModNames')
@@ -74,7 +82,7 @@ class ValidateHandlerTest extends TestCase
         $validationService = $this->createMock(ValidationService::class);
         $validationService->expects($this->once())
                           ->method('validate')
-                          ->with($this->identicalTo($modNames))
+                          ->with($this->identicalTo($modNames), $this->equalTo($factorioVersion))
                           ->willReturn($validatedMods);
 
         $instance = new ValidateHandler($combinationService, $validationService);
