@@ -40,36 +40,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: The ID of the combination.
-                    example: "2f4a45fa-a509-a9d1-aae6-ffcf984a7a76"
-                  shortId:
-                    type: string
-                    description: The short ID of the combination.
-                    example: "1reA6H5z4uFpotvegbLIr4"
-                  modNames:
-                    type: array
-                    description: The names of the mods contained in the combination.
-                    items:
-                      type: string
-                    example: ["base"]
-                  isDataAvailable:
-                    type: boolean
-                    description: Whether the data of this combination is available in the Data API.
-                    example: true
-                  exportTime:
-                    type: string
-                    format: date-time
-                    description: The time when the combination was last exported.
-                    example: "2038-01-19T03:14:07+00:00"
-                required:
-                  - id
-                  - shortId
-                  - modNames
-                  - isDataAvailable
+                $ref: "#/components/schemas/Combination"
   /validate/{factorio-version}:
     post:
       summary: Validates the combination against the mod portal to contain compatible and available mods.
@@ -321,6 +292,39 @@ components:
         - latest
         - priority
       default: priority
+
+    Combination:
+      description: The details of a combination.
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the combination.
+          example: "2f4a45fa-a509-a9d1-aae6-ffcf984a7a76"
+        shortId:
+          type: string
+          description: The short ID of the combination.
+          example: "1reA6H5z4uFpotvegbLIr4"
+        modNames:
+          type: array
+          description: The names of the mods contained in the combination.
+          items:
+            type: string
+          example: [ "base" ]
+        isDataAvailable:
+          type: boolean
+          description: Whether the data of this combination is available in the Data API.
+          example: true
+        exportTime:
+          type: string
+          format: date-time
+          description: The time when the combination was last exported.
+          example: "2038-01-19T03:14:07+00:00"
+      required:
+        - id
+        - shortId
+        - modNames
+        - isDataAvailable
 
     Job:
       description: The details of an export job.

@@ -37,9 +37,9 @@ return [
             Helper\CombinationIdCalculator::class => AutoWireFactory::class,
             Helper\QueuePositionHelper::class => AutoWireFactory::class,
 
+            Mapper\CombinationMapper::class => AutoWireFactory::class,
             Mapper\JobChangeMapper::class => AutoWireFactory::class,
             Mapper\JobMapper::class => AutoWireFactory::class,
-            Mapper\StatusResponseMapper::class => AutoWireFactory::class,
 
             Middleware\AgentMiddleware::class => AutoWireFactory::class,
             Middleware\MetaMiddleware::class => AutoWireFactory::class,

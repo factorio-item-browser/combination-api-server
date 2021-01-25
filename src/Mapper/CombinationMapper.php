@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Mapper;
 
-use BluePsyduck\MapperManager\Mapper\StaticMapperInterface;
-use FactorioItemBrowser\CombinationApi\Client\Response\Combination\StatusResponse;
-use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
+use BluePsyduck\MapperManager\Mapper\DynamicMapperInterface;
+use FactorioItemBrowser\CombinationApi\Client\Transfer\Combination as ClientCombination;
+use FactorioItemBrowser\CombinationApi\Server\Entity\Combination as DatabaseCombination;
 use FactorioItemBrowser\CombinationApi\Server\Helper\CombinationIdCalculator;
 
 /**
- * The mapper for the status response.
+ * The mapper for the combination.
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
  *
- * @implements StaticMapperInterface<Combination, StatusResponse>
+ * @implements DynamicMapperInterface<DatabaseCombination, ClientCombination>
  */
-class StatusResponseMapper implements StaticMapperInterface
+class CombinationMapper implements DynamicMapperInterface
 {
     private CombinationIdCalculator $combinationIdCalculator;
 
@@ -26,19 +26,14 @@ class StatusResponseMapper implements StaticMapperInterface
         $this->combinationIdCalculator = $combinationIdCalculator;
     }
 
-    public function getSupportedSourceClass(): string
+    public function supports(object $source, object $destination): bool
     {
-        return Combination::class;
-    }
-
-    public function getSupportedDestinationClass(): string
-    {
-        return StatusResponse::class;
+        return $source instanceof DatabaseCombination && $destination instanceof ClientCombination;
     }
 
     /**
-     * @param Combination $source
-     * @param StatusResponse $destination
+     * @param DatabaseCombination $source
+     * @param ClientCombination $destination
      */
     public function map(object $source, object $destination): void
     {

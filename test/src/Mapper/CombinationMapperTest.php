@@ -6,28 +6,50 @@ namespace FactorioItemBrowserTest\CombinationApi\Server\Mapper;
 
 use DateTimeImmutable;
 use FactorioItemBrowser\CombinationApi\Client\Response\Combination\StatusResponse;
-use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
+use FactorioItemBrowser\CombinationApi\Client\Transfer\Combination as ClientCombination;
+use FactorioItemBrowser\CombinationApi\Server\Entity\Combination as DatabaseCombination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Mod;
 use FactorioItemBrowser\CombinationApi\Server\Helper\CombinationIdCalculator;
-use FactorioItemBrowser\CombinationApi\Server\Mapper\StatusResponseMapper;
+use FactorioItemBrowser\CombinationApi\Server\Mapper\CombinationMapper;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
+use stdClass;
 
 /**
- * The PHPUnit test of the StatusResponseMapper class.
+ * The PHPUnit test of the CombinationMapper class.
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
- * @covers \FactorioItemBrowser\CombinationApi\Server\Mapper\StatusResponseMapper
+ * @covers \FactorioItemBrowser\CombinationApi\Server\Mapper\CombinationMapper
  */
-class StatusResponseMapperTest extends TestCase
+class CombinationMapperTest extends TestCase
 {
-    public function testMeta(): void
+    /**
+     * @return array<mixed>
+     */
+    public function provideSupports(): array
     {
-        $instance = new StatusResponseMapper($this->createMock(CombinationIdCalculator::class));
+        return [
+            [new DatabaseCombination(), new ClientCombination(), true],
+            [new DatabaseCombination(), new StatusResponse(), true],
 
-        $this->assertSame(Combination::class, $instance->getSupportedSourceClass());
-        $this->assertSame(StatusResponse::class, $instance->getSupportedDestinationClass());
+            [new DatabaseCombination(), new stdClass(), false],
+            [new stdClass(), new ClientCombination(), false],
+        ];
+    }
+
+    /**
+     * @param object $source
+     * @param object $destination
+     * @param bool $expectedResult
+     * @dataProvider provideSupports
+     */
+    public function testSupports(object $source, object $destination, bool $expectedResult): void
+    {
+        $instance = new CombinationMapper(new CombinationIdCalculator());
+        $result = $instance->supports($source, $destination);
+
+        $this->assertSame($expectedResult, $result);
     }
 
     public function testMap(): void
@@ -39,7 +61,7 @@ class StatusResponseMapperTest extends TestCase
         $mod2->setName('def');
         $destination = new StatusResponse();
 
-        $source = new Combination();
+        $source = new DatabaseCombination();
         $source->setId(Uuid::fromString($combinationId));
         $source->setExportTime(new DateTimeImmutable('2038-01-19 03:14:07+00:00'));
         $source->getMods()->add($mod1);
@@ -52,7 +74,7 @@ class StatusResponseMapperTest extends TestCase
         $expectedDestination->isDataAvailable = true;
         $expectedDestination->exportTime = new DateTimeImmutable('2038-01-19 03:14:07+00:00');
 
-        $instance = new StatusResponseMapper(new CombinationIdCalculator());
+        $instance = new CombinationMapper(new CombinationIdCalculator());
         $instance->map($source, $destination);
 
         $this->assertEquals($expectedDestination, $destination);
