@@ -109,7 +109,7 @@ class JobRepositoryTest extends TestCase
                     ['status', 'abc', JobStatusType::NAME],
                 ],
                 [
-                    ['c2.timestamp', 'ASC'],
+                    ['c.timestamp', 'ASC'],
                     ['j.id', 'ASC'],
                 ],
             ],
@@ -121,7 +121,7 @@ class JobRepositoryTest extends TestCase
                 [['statusQueued', JobStatus::QUEUED]],
                 [
                     ['j.priority', 'ASC'],
-                    ['c2.timestamp', 'ASC'],
+                    ['c.timestamp', 'ASC'],
                     ['j.id', 'ASC'],
                 ],
             ],
@@ -132,7 +132,7 @@ class JobRepositoryTest extends TestCase
                 [],
                 [['statusQueued', JobStatus::QUEUED]],
                 [
-                    ['c2.timestamp', 'DESC'],
+                    ['c.timestamp', 'DESC'],
                     ['j.id', 'ASC'],
                 ],
             ],
@@ -171,22 +171,19 @@ class JobRepositoryTest extends TestCase
         $queryBuilder = $this->createMock(QueryBuilder::class);
         $queryBuilder->expects($this->once())
                      ->method('select')
-                     ->with($this->identicalTo('j'), $this->identicalTo('c'))
+                     ->with($this->identicalTo('j'))
                      ->willReturnSelf();
         $queryBuilder->expects($this->once())
                      ->method('from')
                      ->with($this->identicalTo(Job::class), $this->identicalTo('j'))
                      ->willReturnSelf();
-        $queryBuilder->expects($this->exactly(2))
+        $queryBuilder->expects($this->once())
                      ->method('leftJoin')
-                     ->withConsecutive(
-                         [$this->identicalTo('j.changes'), $this->identicalTo('c')],
-                         [
-                             $this->identicalTo('j.changes'),
-                             $this->identicalTo('c2'),
-                             $this->identicalTo('WITH'),
-                             $this->identicalTo('c2.status = :statusQueued')
-                         ]
+                     ->with(
+                         $this->identicalTo('j.changes'),
+                         $this->identicalTo('c'),
+                         $this->identicalTo('WITH'),
+                         $this->identicalTo('c.status = :statusQueued'),
                      )
                      ->willReturnSelf();
         $queryBuilder->expects($this->exactly(count($expectedConditions)))

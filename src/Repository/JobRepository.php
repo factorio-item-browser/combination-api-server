@@ -62,10 +62,9 @@ class JobRepository
     public function findAll(?UuidInterface $combinationId, string $status, string $order, int $limit): array
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
-        $queryBuilder->select('j', 'c')
+        $queryBuilder->select('j')
                      ->from(Job::class, 'j')
-                     ->leftJoin('j.changes', 'c')
-                     ->leftJoin('j.changes', 'c2', 'WITH', 'c2.status = :statusQueued')
+                     ->leftJoin('j.changes', 'c', 'WITH', 'c.status = :statusQueued')
                      ->setParameter('statusQueued', JobStatus::QUEUED)
                      ->setMaxResults($limit);
 
@@ -81,18 +80,18 @@ class JobRepository
         switch ($order) {
             case ListOrder::PRIORITY:
                 $queryBuilder->addOrderBy('j.priority', 'ASC')
-                             ->addOrderBy('c2.timestamp', 'ASC')
+                             ->addOrderBy('c.timestamp', 'ASC')
                              ->addOrderBy('j.id', 'ASC');
                 break;
 
             case ListOrder::LATEST:
-                $queryBuilder->addOrderBy('c2.timestamp', 'DESC')
+                $queryBuilder->addOrderBy('c.timestamp', 'DESC')
                              ->addOrderBy('j.id', 'ASC');
                 break;
 
             case ListOrder::CREATION:
             default:
-                $queryBuilder->addOrderBy('c2.timestamp', 'ASC')
+                $queryBuilder->addOrderBy('c.timestamp', 'ASC')
                              ->addOrderBy('j.id', 'ASC');
                 break;
         }
