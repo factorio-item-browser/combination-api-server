@@ -6,10 +6,8 @@ namespace FactorioItemBrowserTest\CombinationApi\Server\Entity;
 
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
-use FactorioItemBrowser\CombinationApi\Client\Constant\JobStatus;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Job;
-use FactorioItemBrowser\CombinationApi\Server\Entity\JobChange;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
 
@@ -65,6 +63,15 @@ class JobTest extends TestCase
         $this->assertSame($status, $instance->getStatus());
     }
 
+    public function testSetAndGetCreationTime(): void
+    {
+        $value = new DateTimeImmutable('2038-01-19 03:14:00+00:00');
+        $instance = new Job();
+
+        $this->assertSame($instance, $instance->setCreationTime($value));
+        $this->assertSame($value, $instance->getCreationTime());
+    }
+
     public function testSetAndGetErrorMessage(): void
     {
         $errorMessage = 'abc';
@@ -72,26 +79,6 @@ class JobTest extends TestCase
 
         $this->assertSame($instance, $instance->setErrorMessage($errorMessage));
         $this->assertSame($errorMessage, $instance->getErrorMessage());
-    }
-
-    public function testGetCreationTime(): void
-    {
-        $change1 = new JobChange();
-        $change1->setStatus(JobStatus::DONE)
-                ->setTimestamp(new DateTimeImmutable('2038-01-19 03:14:07+00:00'));
-
-        $change2 = new JobChange();
-        $change2->setStatus(JobStatus::QUEUED)
-                ->setTimestamp(new DateTimeImmutable('2038-01-19 02:14:07+00:00'));
-
-        $expectedResult = new DateTimeImmutable('2038-01-19 02:14:07+00:00');
-
-        $instance = new Job();
-        $instance->getChanges()->add($change1);
-        $instance->getChanges()->add($change2);
-
-        $result = $instance->getCreationTime();
-        $this->assertEquals($expectedResult, $result);
     }
 
     public function testGetCreationTimeWithoutQueuedChange(): void

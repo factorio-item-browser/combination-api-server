@@ -8,7 +8,6 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use FactorioItemBrowser\CombinationApi\Client\Constant\JobStatus;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -23,12 +22,14 @@ class Job
     private Combination $combination;
     private string $priority;
     private string $status;
+    private DateTimeInterface $creationTime;
     private string $errorMessage;
     /** @var Collection<int, JobChange> */
     private Collection $changes;
 
     public function __construct()
     {
+        $this->creationTime = new DateTimeImmutable();
         $this->changes = new ArrayCollection();
     }
 
@@ -76,6 +77,17 @@ class Job
         return $this->status;
     }
 
+    public function setCreationTime(DateTimeInterface $creationTime): self
+    {
+        $this->creationTime = $creationTime;
+        return $this;
+    }
+
+    public function getCreationTime(): DateTimeInterface
+    {
+        return $this->creationTime;
+    }
+
     public function setErrorMessage(string $errorMessage): self
     {
         $this->errorMessage = $errorMessage;
@@ -93,18 +105,5 @@ class Job
     public function getChanges(): Collection
     {
         return $this->changes;
-    }
-
-    public function getCreationTime(): DateTimeInterface
-    {
-        foreach ($this->changes as $change) {
-            /* @var JobChange $change */
-            if ($change->getStatus() === JobStatus::QUEUED) {
-                return $change->getTimestamp();
-            }
-        }
-
-        // Fallback if the job is missing initial status change, which should never happen.
-        return new DateTimeImmutable();
     }
 }

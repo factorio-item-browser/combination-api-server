@@ -64,8 +64,6 @@ class JobRepository
         $queryBuilder = $this->entityManager->createQueryBuilder();
         $queryBuilder->select('j')
                      ->from(Job::class, 'j')
-                     ->leftJoin('j.changes', 'c', 'WITH', 'c.status = :statusQueued')
-                     ->setParameter('statusQueued', JobStatus::QUEUED)
                      ->setMaxResults($limit);
 
         if ($combinationId !== null) {
@@ -80,22 +78,21 @@ class JobRepository
         switch ($order) {
             case ListOrder::PRIORITY:
                 $queryBuilder->addOrderBy('j.priority', 'ASC')
-                             ->addOrderBy('c.timestamp', 'ASC')
+                             ->addOrderBy('j.creationTime', 'ASC')
                              ->addOrderBy('j.id', 'ASC');
                 break;
 
             case ListOrder::LATEST:
-                $queryBuilder->addOrderBy('c.timestamp', 'DESC')
+                $queryBuilder->addOrderBy('j.creationTime', 'DESC')
                              ->addOrderBy('j.id', 'ASC');
                 break;
 
             case ListOrder::CREATION:
             default:
-                $queryBuilder->addOrderBy('c.timestamp', 'ASC')
+                $queryBuilder->addOrderBy('j.creationTime', 'ASC')
                              ->addOrderBy('j.id', 'ASC');
                 break;
         }
-
 
         return $queryBuilder->getQuery()->getResult();
     }

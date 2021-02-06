@@ -35,6 +35,12 @@
             </options>
         </field>
 
+        <field name="creationTime" type="datetime">
+            <options>
+                <option name="comment">The creation time of the job.</option>
+            </options>
+        </field>
+
         <field name="errorMessage" type="text">
             <options>
                 <option name="comment">The error message in case the job failed.</option>

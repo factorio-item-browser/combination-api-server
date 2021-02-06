@@ -16,6 +16,7 @@ use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Job;
 use FactorioItemBrowser\CombinationApi\Server\Entity\JobChange;
 use FactorioItemBrowser\CombinationApi\Server\Repository\JobRepository;
+use PHPUnit\Framework\Constraint\Callback;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Doctrine\UuidBinaryType;
 use Ramsey\Uuid\Uuid;
@@ -104,12 +105,11 @@ class JobRepositoryTest extends TestCase
                     ['j.status = :status'],
                 ],
                 [
-                    ['statusQueued', JobStatus::QUEUED],
                     ['combinationId', $combinationId, UuidBinaryType::NAME],
                     ['status', 'abc', JobStatusType::NAME],
                 ],
                 [
-                    ['c.timestamp', 'ASC'],
+                    ['j.creationTime', 'ASC'],
                     ['j.id', 'ASC'],
                 ],
             ],
@@ -118,10 +118,10 @@ class JobRepositoryTest extends TestCase
                 '',
                 ListOrder::PRIORITY,
                 [],
-                [['statusQueued', JobStatus::QUEUED]],
+                [],
                 [
                     ['j.priority', 'ASC'],
-                    ['c.timestamp', 'ASC'],
+                    ['j.creationTime', 'ASC'],
                     ['j.id', 'ASC'],
                 ],
             ],
@@ -130,9 +130,9 @@ class JobRepositoryTest extends TestCase
                 '',
                 ListOrder::LATEST,
                 [],
-                [['statusQueued', JobStatus::QUEUED]],
+                [],
                 [
-                    ['c.timestamp', 'DESC'],
+                    ['j.creationTime', 'DESC'],
                     ['j.id', 'ASC'],
                 ],
             ],
@@ -176,15 +176,6 @@ class JobRepositoryTest extends TestCase
         $queryBuilder->expects($this->once())
                      ->method('from')
                      ->with($this->identicalTo(Job::class), $this->identicalTo('j'))
-                     ->willReturnSelf();
-        $queryBuilder->expects($this->once())
-                     ->method('leftJoin')
-                     ->with(
-                         $this->identicalTo('j.changes'),
-                         $this->identicalTo('c'),
-                         $this->identicalTo('WITH'),
-                         $this->identicalTo('c.status = :statusQueued'),
-                     )
                      ->willReturnSelf();
         $queryBuilder->expects($this->exactly(count($expectedConditions)))
                      ->method('andWhere')
@@ -236,13 +227,13 @@ class JobRepositoryTest extends TestCase
         $entityManager->expects($this->exactly(2))
                       ->method('persist')
                       ->withConsecutive(
-                          [$this->callback(function (Job $actualJob) use ($expectedJob): bool {
+                          [new Callback(function (Job $actualJob) use ($expectedJob): bool {
                               $this->assertSame($expectedJob->getCombination(), $actualJob->getCombination());
                               $this->assertSame($expectedJob->getPriority(), $actualJob->getPriority());
                               $this->assertSame($expectedJob->getErrorMessage(), $actualJob->getErrorMessage());
                               return true;
                           })],
-                          [$this->callback(function (JobChange $actualChange) use ($expectedChange): bool {
+                          [new Callback(function (JobChange $actualChange) use ($expectedChange): bool {
                               $this->assertSame($expectedChange->getInitiator(), $actualChange->getInitiator());
                               $this->assertSame($expectedChange->getStatus(), $actualChange->getStatus());
                               return true;
@@ -269,7 +260,7 @@ class JobRepositoryTest extends TestCase
         $changes = $this->createMock(Collection::class);
         $changes->expects($this->once())
                 ->method('add')
-                ->with($this->callback(function (JobChange $actualChange) use ($expectedChange): bool {
+                ->with(new Callback(function (JobChange $actualChange) use ($expectedChange): bool {
                     $this->assertSame($expectedChange->getJob(), $actualChange->getJob());
                     $this->assertSame($expectedChange->getInitiator(), $actualChange->getInitiator());
                     $this->assertSame($expectedChange->getStatus(), $actualChange->getStatus());

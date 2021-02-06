@@ -62,9 +62,7 @@ class JobMapperTest extends TestCase
         $combination->setId(Uuid::fromString('2f4a45fa-a509-a9d1-aae6-ffcf984a7a76'));
 
         $databaseChange1 = new DatabaseJobChange();
-        $databaseChange1->setStatus(JobStatus::QUEUED)
-                        ->setTimestamp(new DateTimeImmutable('2038-01-19 03:14:07'));
-
+        $databaseChange1->setStatus(JobStatus::QUEUED);
         $databaseChange2 = new DatabaseJobChange();
         $databaseChange2->setStatus(JobStatus::ERROR);
 
@@ -76,6 +74,7 @@ class JobMapperTest extends TestCase
                ->setCombination($combination)
                ->setPriority('abc')
                ->setStatus('def')
+               ->setCreationTime(new DateTimeImmutable('2038-01-19 03:14:07'))
                ->setErrorMessage('ghi');
         $source->getChanges()->add($databaseChange1);
         $source->getChanges()->add($databaseChange2);
