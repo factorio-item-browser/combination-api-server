@@ -86,6 +86,7 @@ class ValidationService
             $dependentRelease = $allReleases[$dependency->getMod()] ?? null;
             switch ($dependency->getType()) {
                 case DependencyType::MANDATORY:
+                case DependencyType::MANDATORY_CIRCULAR:
                     if (
                         $dependentRelease === null
                         || !$dependency->isMatchedByVersion($dependentRelease->getVersion())

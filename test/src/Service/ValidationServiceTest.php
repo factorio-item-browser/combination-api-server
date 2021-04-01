@@ -75,19 +75,34 @@ class ValidationServiceTest extends TestCase
         $validatedValidMod->name = 'validMod';
         $validatedValidMod->version = '3.4.5';
 
-        $missingDependencyMod = new Mod();
-        $missingDependencyRelease = new Release();
-        $missingDependencyRelease->setVersion(new Version('4.5.6'));
-        $missingDependencyRelease->getInfoJson()->setDependencies([
+        $missingDependency1Mod = new Mod();
+        $missingDependency1Release = new Release();
+        $missingDependency1Release->setVersion(new Version('4.5.6'));
+        $missingDependency1Release->getInfoJson()->setDependencies([
             new Dependency('notExistingMod'),
             new Dependency('dummyMod > 2.0'),
         ]);
-        $validatedMissingDependencyMod = new ValidatedMod();
-        $validatedMissingDependencyMod->name = 'missingDependencyMod';
-        $validatedMissingDependencyMod->version = '4.5.6';
-        $validatedMissingDependencyMod->problems = [
+        $validatedMissingDependency1Mod = new ValidatedMod();
+        $validatedMissingDependency1Mod->name = 'missingDependency1Mod';
+        $validatedMissingDependency1Mod->version = '4.5.6';
+        $validatedMissingDependency1Mod->problems = [
             $createProblem(ValidationProblemType::MISSING_DEPENDENCY, 'notExistingMod'),
             $createProblem(ValidationProblemType::MISSING_DEPENDENCY, 'dummyMod > 2.0.0'),
+        ];
+
+        $missingDependency2Mod = new Mod();
+        $missingDependency2Release = new Release();
+        $missingDependency2Release->setVersion(new Version('4.5.6'));
+        $missingDependency2Release->getInfoJson()->setDependencies([
+            new Dependency('notExistingMod'),
+            new Dependency('~ dummyMod > 2.0'),
+        ]);
+        $validatedMissingDependency2Mod = new ValidatedMod();
+        $validatedMissingDependency2Mod->name = 'missingDependency2Mod';
+        $validatedMissingDependency2Mod->version = '4.5.6';
+        $validatedMissingDependency2Mod->problems = [
+            $createProblem(ValidationProblemType::MISSING_DEPENDENCY, 'notExistingMod'),
+            $createProblem(ValidationProblemType::MISSING_DEPENDENCY, '~ dummyMod > 2.0.0'),
         ];
 
         $conflictedMod = new Mod();
@@ -113,7 +128,8 @@ class ValidationServiceTest extends TestCase
             'missingMod',
             'missingReleaseMod',
             'validMod',
-            'missingDependencyMod',
+            'missingDependency1Mod',
+            'missingDependency2Mod',
             'conflictedMod',
         ];
         $mods = [
@@ -122,14 +138,16 @@ class ValidationServiceTest extends TestCase
             'dummyMod2' => $dummyMod2,
             'missingReleaseMod' => $missingReleaseMod,
             'validMod' => $validMod,
-            'missingDependencyMod' => $missingDependencyMod,
+            'missingDependency1Mod' => $missingDependency1Mod,
+            'missingDependency2Mod' => $missingDependency2Mod,
             'conflictedMod' => $conflictedMod,
         ];
         $releases = [
             'dummyMod1' => $dummyRelease1,
             'dummyMod2' => $dummyRelease2,
             'validMod' => $validRelease,
-            'missingDependencyMod' => $missingDependencyRelease,
+            'missingDependency1Mod' => $missingDependency1Release,
+            'missingDependency2Mod' => $missingDependency2Release,
             'conflictedMod' => $conflictedRelease,
         ];
         $expectedResult = [
@@ -139,7 +157,8 @@ class ValidationServiceTest extends TestCase
             'missingMod' => $validatedMissingMod,
             'missingReleaseMod' => $validatedMissingReleaseMod,
             'validMod' => $validatedValidMod,
-            'missingDependencyMod' => $validatedMissingDependencyMod,
+            'missingDependency1Mod' => $validatedMissingDependency1Mod,
+            'missingDependency2Mod' => $validatedMissingDependency2Mod,
             'conflictedMod' => $validatedConflictedMod,
         ];
 
