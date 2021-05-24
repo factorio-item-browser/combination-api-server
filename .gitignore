@@ -6,4 +6,3 @@
 
 /config/autoload/development/factorio-mod-portal-client.local.php
 /.phpunit.result.cache
-/composer.lock

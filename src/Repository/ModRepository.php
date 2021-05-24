@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace FactorioItemBrowser\CombinationApi\Server\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Mod;
 use Ramsey\Uuid\Uuid;
 
@@ -33,7 +32,8 @@ class ModRepository
     {
         $entity = Mod::class;
         $query = $this->entityManager->createQuery("SELECT m FROM {$entity} m WHERE m.name IN (:modNames)");
-        return $query->execute(['modNames' => $modNames], Query::HYDRATE_OBJECT);
+        $query->setParameter('modNames', $modNames);
+        return $query->getResult();
     }
 
     /**

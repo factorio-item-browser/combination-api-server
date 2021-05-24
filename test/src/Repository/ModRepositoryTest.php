@@ -6,7 +6,6 @@ namespace FactorioItemBrowserTest\CombinationApi\Server\Repository;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Mod;
 use FactorioItemBrowser\CombinationApi\Server\Repository\ModRepository;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +23,6 @@ class ModRepositoryTest extends TestCase
     public function testFindByNames(): void
     {
         $modNames = ['abc', 'def'];
-        $expectedParameters = ['modNames' => ['abc', 'def']];
         $queryResult = [
             $this->createMock(Mod::class),
             $this->createMock(Mod::class),
@@ -32,8 +30,11 @@ class ModRepositoryTest extends TestCase
 
         $query = $this->createMock(AbstractQuery::class);
         $query->expects($this->once())
-              ->method('execute')
-              ->with($this->identicalTo($expectedParameters), $this->identicalTo(Query::HYDRATE_OBJECT))
+              ->method('setParameter')
+              ->with($this->identicalTo('modNames'), $this->identicalTo($modNames))
+              ->willReturnSelf();
+        $query->expects($this->once())
+              ->method('getResult')
               ->willReturn($queryResult);
 
         $entityManager = $this->createMock(EntityManagerInterface::class);
