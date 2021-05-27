@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9fb20c643d7a7805cc3a6196da5323b1",
+    "content-hash": "aecfe31eb3565c614cafd6bd492ff8ea",
     "packages": [
         {
             "name": "bluepsyduck/factorio-mod-portal-client",
@@ -1555,16 +1555,16 @@
         },
         {
             "name": "factorio-item-browser/combination-api-client",
-            "version": "dev-master",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/factorio-item-browser/combination-api-client.git",
-                "reference": "b1062212d241e7240a826d3d0ee73efec3b86ab8"
+                "reference": "be2c4e706214fe49d707df0c478c953e38822a03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/factorio-item-browser/combination-api-client/zipball/b1062212d241e7240a826d3d0ee73efec3b86ab8",
-                "reference": "b1062212d241e7240a826d3d0ee73efec3b86ab8",
+                "url": "https://api.github.com/repos/factorio-item-browser/combination-api-client/zipball/be2c4e706214fe49d707df0c478c953e38822a03",
+                "reference": "be2c4e706214fe49d707df0c478c953e38822a03",
                 "shasum": ""
             },
             "require": {
@@ -1585,7 +1585,6 @@
                 "rregeer/phpunit-coverage-check": "^0.3",
                 "squizlabs/php_codesniffer": "^3.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1612,9 +1611,9 @@
                 "combination"
             ],
             "support": {
-                "source": "https://github.com/factorio-item-browser/combination-api-client/tree/master"
+                "source": "https://github.com/factorio-item-browser/combination-api-client/tree/1.1.0"
             },
-            "time": "2021-05-27T08:38:33+00:00"
+            "time": "2021-05-27T08:59:11+00:00"
         },
         {
             "name": "factorio-item-browser/common",
@@ -7618,18 +7617,9 @@
             "time": "2020-07-12T23:59:07+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "factorio-item-browser/combination-api-client",
-            "version": "9999999-dev",
-            "alias": "1.1",
-            "alias_normalized": "1.1.0.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "factorio-item-browser/combination-api-client": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 - 2021-05-27
+
+### Added
+
+- Parameter `first` to the job list request.
+
 ## 1.0.2 - 2021-05-24
 
 ### Changed
