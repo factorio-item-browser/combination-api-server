@@ -45,7 +45,7 @@ class JobService
     {
         try {
             $id = Uuid::fromString($jobId);
-        } catch (Exception $e) {
+        } catch (Exception) {
             throw new InvalidJobIdException($jobId);
         }
 
@@ -65,7 +65,7 @@ class JobService
     {
         try {
             $combinationId = Uuid::fromString($queryParams[ParameterName::COMBINATION_ID] ?? '');
-        } catch (Exception $e) {
+        } catch (Exception) {
             $combinationId = null;
         }
 
@@ -73,7 +73,8 @@ class JobService
             $combinationId,
             $queryParams[ParameterName::STATUS] ?? '',
             $queryParams[ParameterName::ORDER] ?? '',
-            (int) ($queryParams[ParameterName::LIMIT] ?? 10)
+            (int) ($queryParams[ParameterName::LIMIT] ?? 10),
+            (int) ($queryParams[ParameterName::FIRST] ?? 0),
         );
     }
 

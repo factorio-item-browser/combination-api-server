@@ -110,6 +110,7 @@ class JobServiceTest extends TestCase
             'status' => 'abc',
             'order' => 'def',
             'limit' => '42',
+            'first' => '21',
         ];
         $jobs = [
             $this->createMock(Job::class),
@@ -122,7 +123,8 @@ class JobServiceTest extends TestCase
                                 $this->equalTo(Uuid::fromString('2f4a45fa-a509-a9d1-aae6-ffcf984a7a76')),
                                 $this->identicalTo('abc'),
                                 $this->identicalTo('def'),
-                                $this->identicalTo(42)
+                                $this->identicalTo(42),
+                                $this->identicalTo(21),
                             )
                             ->willReturn($jobs);
 
@@ -145,7 +147,8 @@ class JobServiceTest extends TestCase
                                 $this->isNull(),
                                 $this->identicalTo(''),
                                 $this->identicalTo(''),
-                                $this->identicalTo(10)
+                                $this->identicalTo(10),
+                                $this->identicalTo(0),
                             )
                             ->willReturn($jobs);
 

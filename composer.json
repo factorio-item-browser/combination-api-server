@@ -20,7 +20,7 @@
     "bluepsyduck/mapper-manager": "^1.2",
     "doctrine/orm": "^2.6",
     "factorio-item-browser/common": "^1.3",
-    "factorio-item-browser/combination-api-client": "^1.0",
+    "factorio-item-browser/combination-api-client": "dev-master as 1.1",
     "laminas/laminas-config-aggregator": "^1.4",
     "laminas/laminas-diactoros": "^2.5",
     "laminas/laminas-log": "^2.13",

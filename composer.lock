@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b4ddf3d9b27a8b5b9bb9d9f2b024ab69",
+    "content-hash": "9fb20c643d7a7805cc3a6196da5323b1",
     "packages": [
         {
             "name": "bluepsyduck/factorio-mod-portal-client",
@@ -526,16 +526,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "1.11.2",
+            "version": "1.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "9c53086695937c50c47936ed86d96150ffbcf60d"
+                "reference": "3bb5588cec00a0268829cc4a518490df6741af9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/9c53086695937c50c47936ed86d96150ffbcf60d",
-                "reference": "9c53086695937c50c47936ed86d96150ffbcf60d",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/3bb5588cec00a0268829cc4a518490df6741af9d",
+                "reference": "3bb5588cec00a0268829cc4a518490df6741af9d",
                 "shasum": ""
             },
             "require": {
@@ -605,7 +605,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/cache/issues",
-                "source": "https://github.com/doctrine/cache/tree/1.11.2"
+                "source": "https://github.com/doctrine/cache/tree/1.11.3"
             },
             "funding": [
                 {
@@ -621,7 +621,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-20T14:57:29+00:00"
+            "time": "2021-05-25T09:01:55+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -1376,16 +1376,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.9.0",
+            "version": "2.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "99d67cb77d3626c52f4d5feb5caed58948ea5577"
+                "reference": "f3e55fae9fdbdbc23897006bdbf016c20e11f6e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/99d67cb77d3626c52f4d5feb5caed58948ea5577",
-                "reference": "99d67cb77d3626c52f4d5feb5caed58948ea5577",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/f3e55fae9fdbdbc23897006bdbf016c20e11f6e9",
+                "reference": "f3e55fae9fdbdbc23897006bdbf016c20e11f6e9",
                 "shasum": ""
             },
             "require": {
@@ -1462,9 +1462,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/2.9.0"
+                "source": "https://github.com/doctrine/orm/tree/2.9.1"
             },
-            "time": "2021-05-21T07:15:28+00:00"
+            "time": "2021-05-24T15:54:12+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -1555,16 +1555,16 @@
         },
         {
             "name": "factorio-item-browser/combination-api-client",
-            "version": "1.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/factorio-item-browser/combination-api-client.git",
-                "reference": "e58cf4db720cdb132870ab1803d50c74b3381333"
+                "reference": "b1062212d241e7240a826d3d0ee73efec3b86ab8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/factorio-item-browser/combination-api-client/zipball/e58cf4db720cdb132870ab1803d50c74b3381333",
-                "reference": "e58cf4db720cdb132870ab1803d50c74b3381333",
+                "url": "https://api.github.com/repos/factorio-item-browser/combination-api-client/zipball/b1062212d241e7240a826d3d0ee73efec3b86ab8",
+                "reference": "b1062212d241e7240a826d3d0ee73efec3b86ab8",
                 "shasum": ""
             },
             "require": {
@@ -1585,6 +1585,7 @@
                 "rregeer/phpunit-coverage-check": "^0.3",
                 "squizlabs/php_codesniffer": "^3.5"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1611,9 +1612,9 @@
                 "combination"
             ],
             "support": {
-                "source": "https://github.com/factorio-item-browser/combination-api-client/tree/1.0.1"
+                "source": "https://github.com/factorio-item-browser/combination-api-client/tree/master"
             },
-            "time": "2021-05-18T13:03:20+00:00"
+            "time": "2021-05-27T08:38:33+00:00"
         },
         {
             "name": "factorio-item-browser/common",
@@ -7617,9 +7618,18 @@
             "time": "2020-07-12T23:59:07+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "factorio-item-browser/combination-api-client",
+            "version": "9999999-dev",
+            "alias": "1.1",
+            "alias_normalized": "1.1.0.0"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "factorio-item-browser/combination-api-client": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

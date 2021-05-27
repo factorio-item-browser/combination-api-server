@@ -45,7 +45,7 @@ class JobRepository
         $query->setParameter('jobId', $jobId, UuidBinaryType::NAME);
         try {
             return $query->getOneOrNullResult();
-        } catch (NonUniqueResultException $e) {
+        } catch (NonUniqueResultException) {
             // Will never happen: We are searching for the primary key.
             return null;
         }
@@ -57,14 +57,16 @@ class JobRepository
      * @param string $status
      * @param string $order
      * @param int $limit
+     * @param int $first
      * @return array<Job>
      */
-    public function findAll(?UuidInterface $combinationId, string $status, string $order, int $limit): array
+    public function findAll(?UuidInterface $combinationId, string $status, string $order, int $limit, int $first): array
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
         $queryBuilder->select('j')
                      ->from(Job::class, 'j')
-                     ->setMaxResults($limit);
+                     ->setMaxResults($limit)
+                     ->setFirstResult($first);
 
         if ($combinationId !== null) {
             $queryBuilder->andWhere('j.combination = :combinationId')

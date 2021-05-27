@@ -157,6 +157,7 @@ class JobRepositoryTest extends TestCase
         array $expectedOrders
     ): void {
         $limit = 42;
+        $first = 21;
 
         $jobs = [
             $this->createMock(Job::class),
@@ -189,6 +190,10 @@ class JobRepositoryTest extends TestCase
                      ->method('setMaxResults')
                      ->with($this->identicalTo($limit))
                      ->willReturnSelf();
+        $queryBuilder->expects($this->once())
+                     ->method('setFirstResult')
+                     ->with($this->identicalTo($first))
+                     ->willReturnSelf();
         $queryBuilder->expects($this->exactly(count($expectedOrders)))
                      ->method('addOrderBy')
                      ->withConsecutive(...$expectedOrders)
@@ -203,7 +208,7 @@ class JobRepositoryTest extends TestCase
                       ->willReturn($queryBuilder);
 
         $instance = new JobRepository($entityManager);
-        $result = $instance->findAll($combinationId, $status, $order, $limit);
+        $result = $instance->findAll($combinationId, $status, $order, $limit, $first);
 
         $this->assertSame($jobs, $result);
     }

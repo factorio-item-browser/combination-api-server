@@ -49,7 +49,13 @@ class QueuePositionHelper
     private function fetchQueuePositions(): array
     {
         $positions = [];
-        $jobs = $this->jobRepository->findAll(null, JobStatus::QUEUED, ListOrder::PRIORITY, self::MAX_QUEUE_POSITION);
+        $jobs = $this->jobRepository->findAll(
+            null,
+            JobStatus::QUEUED,
+            ListOrder::PRIORITY,
+            self::MAX_QUEUE_POSITION,
+            0,
+        );
         foreach ($jobs as $index => $job) {
             $positions[$job->getId()->toString()] = $index + 1;
         }
