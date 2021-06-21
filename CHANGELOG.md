@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1 - 2021-06-21
+
+### Added
+
+- Sorting of the mods by their names in the combination responses.
+
 ## 1.1.0 - 2021-05-27
 
 ### Added
