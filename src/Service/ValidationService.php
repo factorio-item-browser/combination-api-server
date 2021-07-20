@@ -11,6 +11,7 @@ use BluePsyduck\FactorioModPortalClient\Entity\Version;
 use FactorioItemBrowser\CombinationApi\Client\Constant\ValidationProblemType;
 use FactorioItemBrowser\CombinationApi\Client\Transfer\ValidatedMod;
 use FactorioItemBrowser\CombinationApi\Client\Transfer\ValidationProblem;
+use FactorioItemBrowser\CombinationApi\Server\Exception\FailedModPortalRequestException;
 use FactorioItemBrowser\Common\Constant\Constant;
 
 /**
@@ -33,6 +34,7 @@ class ValidationService
      * @param array<string> $modNames
      * @param Version $factorioVersion
      * @return array<string, ValidatedMod>
+     * @throws FailedModPortalRequestException
      */
     public function validate(array $modNames, Version $factorioVersion): array
     {

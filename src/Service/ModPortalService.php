@@ -9,9 +9,10 @@ use BluePsyduck\FactorioModPortalClient\Entity\Mod;
 use BluePsyduck\FactorioModPortalClient\Entity\Release;
 use BluePsyduck\FactorioModPortalClient\Entity\Version;
 use BluePsyduck\FactorioModPortalClient\Exception\ClientException;
+use BluePsyduck\FactorioModPortalClient\Exception\ErrorResponseException;
 use BluePsyduck\FactorioModPortalClient\Request\FullModRequest;
 use BluePsyduck\FactorioModPortalClient\Utils\ModUtils;
-use GuzzleHttp\Promise\PromiseInterface;
+use FactorioItemBrowser\CombinationApi\Server\Exception\FailedModPortalRequestException;
 use GuzzleHttp\Promise\Utils;
 
 /**
@@ -33,28 +34,35 @@ class ModPortalService
      * Requests the mods from the Mod Portal API. Not known mods will be missing in the result array.
      * @param array<string> $modNames
      * @return array<string, Mod>
+     * @throws FailedModPortalRequestException
      */
     public function requestMods(array $modNames): array
     {
+        $mods = [];
         $promises = [];
         try {
             foreach ($modNames as $modName) {
                 $request = new FullModRequest();
                 $request->setName($modName);
-                $promises[$modName] = $this->modPortalClient->sendRequest($request);
+
+                $promises[] = $this->modPortalClient->sendRequest($request)->then(
+                    function (Mod $mod) use (&$mods): void {
+                        $mods[$mod->getName()] = $mod;
+                    },
+                    function (ClientException $exception): void {
+                        // Ignore mods not existing on the mod portal.
+                        if ($exception instanceof ErrorResponseException && $exception->getCode() === 404) {
+                            return;
+                        }
+                        throw new FailedModPortalRequestException($exception->getMessage(), $exception);
+                    },
+                );
             }
         } catch (ClientException $e) {
+            throw new FailedModPortalRequestException($e->getMessage(), $e);
         }
 
-        $mods = [];
-        $responses = Utils::settle($promises)->wait();
-        foreach ($responses as $response) {
-            if ($response['state'] === PromiseInterface::FULFILLED) {
-                /** @var Mod $mod */
-                $mod = $response['value'];
-                $mods[$mod->getName()] = $mod;
-            }
-        }
+        Utils::all($promises)->wait();
         return $mods;
     }
 
