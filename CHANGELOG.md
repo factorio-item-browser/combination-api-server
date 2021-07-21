@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.2 - 2021-07-21
+
+### Fixed
+
+- Validation request returning a combination as invalid if a request to the Factorio mod Portal has failed. Now a 503
+  status code is returned in these cases.
+
 ## 1.1.1 - 2021-06-21
 
 ### Added
