@@ -9,9 +9,12 @@ use BluePsyduck\FactorioModPortalClient\Entity\Mod;
 use BluePsyduck\FactorioModPortalClient\Entity\Release;
 use BluePsyduck\FactorioModPortalClient\Entity\Version;
 use BluePsyduck\FactorioModPortalClient\Exception\ClientException;
+use BluePsyduck\FactorioModPortalClient\Exception\ErrorResponseException;
 use BluePsyduck\FactorioModPortalClient\Request\FullModRequest;
+use FactorioItemBrowser\CombinationApi\Server\Exception\FailedModPortalRequestException;
 use FactorioItemBrowser\CombinationApi\Server\Service\ModPortalService;
 use GuzzleHttp\Promise\FulfilledPromise;
+use GuzzleHttp\Promise\RejectedPromise;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,6 +26,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ModPortalServiceTest extends TestCase
 {
+    /**
+     * @throws FailedModPortalRequestException
+     */
     public function testRequestMods(): void
     {
         $modNames = ['abc', 'def', 'ghi'];
@@ -38,6 +44,7 @@ class ModPortalServiceTest extends TestCase
         $mod2->setName('def');
         $promise1 = new FulfilledPromise($mod1);
         $promise2 = new FulfilledPromise($mod2);
+        $promise3 = new RejectedPromise(new ErrorResponseException('test', 404, '', ''));
         $expectedResult = [
             'abc' => $mod1,
             'def' => $mod2,
@@ -54,13 +61,72 @@ class ModPortalServiceTest extends TestCase
                         ->willReturnOnConsecutiveCalls(
                             $promise1,
                             $promise2,
-                            $this->throwException($this->createMock(ClientException::class)),
+                            $promise3,
                         );
 
         $instance = new ModPortalService($modPortalClient);
         $result = $instance->requestMods($modNames);
 
         $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testRequestModsWithServerException(): void
+    {
+        $modNames = ['abc', 'def'];
+        $expectedRequest1 = new FullModRequest();
+        $expectedRequest1->setName('abc');
+        $expectedRequest2 = new FullModRequest();
+        $expectedRequest2->setName('def');
+        $mod1 = new Mod();
+        $mod1->setName('abc');
+        $promise1 = new FulfilledPromise($mod1);
+        $promise2 = new RejectedPromise(new ErrorResponseException('test', 500, '', ''));
+
+        $modPortalClient = $this->createMock(ClientInterface::class);
+        $modPortalClient->expects($this->exactly(2))
+                        ->method('sendRequest')
+                        ->withConsecutive(
+                            [$this->equalTo($expectedRequest1)],
+                            [$this->equalTo($expectedRequest2)],
+                        )
+                        ->willReturnOnConsecutiveCalls(
+                            $promise1,
+                            $promise2,
+                        );
+
+        $this->expectException(FailedModPortalRequestException::class);
+
+        $instance = new ModPortalService($modPortalClient);
+        $instance->requestMods($modNames);
+    }
+
+    public function testRequestModsWithInitialException(): void
+    {
+        $modNames = ['abc', 'def'];
+        $expectedRequest1 = new FullModRequest();
+        $expectedRequest1->setName('abc');
+        $expectedRequest2 = new FullModRequest();
+        $expectedRequest2->setName('def');
+        $mod1 = new Mod();
+        $mod1->setName('abc');
+        $promise1 = new FulfilledPromise($mod1);
+
+        $modPortalClient = $this->createMock(ClientInterface::class);
+        $modPortalClient->expects($this->exactly(2))
+            ->method('sendRequest')
+            ->withConsecutive(
+                [$this->equalTo($expectedRequest1)],
+                [$this->equalTo($expectedRequest2)],
+            )
+            ->willReturnOnConsecutiveCalls(
+                $promise1,
+                $this->throwException($this->createMock(ClientException::class)),
+            );
+
+        $this->expectException(FailedModPortalRequestException::class);
+
+        $instance = new ModPortalService($modPortalClient);
+        $instance->requestMods($modNames);
     }
 
     public function testSelectLatestReleases(): void
