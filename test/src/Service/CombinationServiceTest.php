@@ -28,8 +28,7 @@ use Ramsey\Uuid\UuidInterface;
  */
 class CombinationServiceTest extends TestCase
 {
-    /** @var CombinationIdCalculator&MockObject */
-    private CombinationIdCalculator $combinationIdCalculator;
+    private CombinationIdCalculator&MockObject $combinationIdCalculator;
     /** @var CombinationRepository&MockObject */
     private CombinationRepository $combinationRepository;
     /** @var ModService&MockObject */
