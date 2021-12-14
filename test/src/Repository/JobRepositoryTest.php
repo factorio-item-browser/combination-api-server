@@ -33,7 +33,7 @@ class JobRepositoryTest extends TestCase
 {
     public function testFindById(): void
     {
-        $jobId = $this->createMock(UuidInterface::class);
+        $jobId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $job = $this->createMock(Job::class);
 
         $query = $this->createMock(AbstractQuery::class);
@@ -62,7 +62,7 @@ class JobRepositoryTest extends TestCase
 
     public function testFindByIdWithException(): void
     {
-        $jobId = $this->createMock(UuidInterface::class);
+        $jobId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
 
         $query = $this->createMock(AbstractQuery::class);
         $query->expects($this->once())

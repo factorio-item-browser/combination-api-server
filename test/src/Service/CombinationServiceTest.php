@@ -17,7 +17,7 @@ use FactorioItemBrowser\CombinationApi\Server\Service\ModService;
 use Laminas\Diactoros\Request;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\Uuid;
 
 /**
  * The PHPUnit test of the CombinationService class.
@@ -57,7 +57,7 @@ class CombinationServiceTest extends TestCase
      */
     public function testGetCombinationById(): void
     {
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $combination = $this->createMock(Combination::class);
 
         $this->combinationRepository->expects($this->once())
@@ -76,7 +76,7 @@ class CombinationServiceTest extends TestCase
      */
     public function testGetCombinationByIdWithException(): void
     {
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
 
         $this->combinationRepository->expects($this->once())
                                     ->method('findById')
@@ -92,7 +92,7 @@ class CombinationServiceTest extends TestCase
     public function testGetCombinationByModNamesWithExistingCombination(): void
     {
         $modNames = ['abc', 'def'];
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $combination = $this->createMock(Combination::class);
 
         $this->combinationIdCalculator->expects($this->once())
@@ -119,7 +119,7 @@ class CombinationServiceTest extends TestCase
     public function testGetCombinationByModNamesWithNewCombination(): void
     {
         $modNames = ['abc', 'def'];
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $combination = $this->createMock(Combination::class);
         $mods = [
             $this->createMock(Mod::class),
@@ -157,7 +157,7 @@ class CombinationServiceTest extends TestCase
     public function testGetCombinationFromRequestValue(): void
     {
         $requestValue = 'abc';
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $combination = $this->createMock(Combination::class);
 
         $this->combinationIdCalculator->expects($this->once())
@@ -182,7 +182,7 @@ class CombinationServiceTest extends TestCase
     public function testGetCombinationFromRequestHeaderWithCombinationId(): void
     {
         $headerCombinationId = 'abc';
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $combination = $this->createMock(Combination::class);
 
         $request = new Request();
@@ -209,7 +209,7 @@ class CombinationServiceTest extends TestCase
     public function testGetCombinationFromRequestHeaderWithShortCombinationId(): void
     {
         $headerShortCombinationId = 'abc';
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $combination = $this->createMock(Combination::class);
 
         $request = new Request();
@@ -237,7 +237,7 @@ class CombinationServiceTest extends TestCase
     {
         $headerModNames = 'abc,def';
         $modNames = ['abc', 'def'];
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $combination = $this->createMock(Combination::class);
 
         $request = new Request();

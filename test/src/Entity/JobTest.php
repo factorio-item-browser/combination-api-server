@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Combination;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Job;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\Uuid;
 
 /**
  * The PHPUnit test of the Job class.
@@ -29,7 +29,7 @@ class JobTest extends TestCase
 
     public function testSetAndGetId(): void
     {
-        $id = $this->createMock(UuidInterface::class);
+        $id = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $instance = new Job();
 
         $this->assertSame($instance, $instance->setId($id));

@@ -12,7 +12,7 @@ use FactorioItemBrowser\CombinationApi\Server\Entity\Mod;
 use FactorioItemBrowser\CombinationApi\Server\Repository\CombinationRepository;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Doctrine\UuidBinaryType;
-use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\Uuid;
 
 /**
  * The PHPUnit test of the CombinationRepository class.
@@ -25,7 +25,7 @@ class CombinationRepositoryTest extends TestCase
 {
     public function testFindById(): void
     {
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $combination = $this->createMock(Combination::class);
 
         $query = $this->createMock(AbstractQuery::class);
@@ -54,7 +54,7 @@ class CombinationRepositoryTest extends TestCase
 
     public function testFindByIdWithException(): void
     {
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
 
         $query = $this->createMock(AbstractQuery::class);
         $query->expects($this->once())
@@ -82,7 +82,7 @@ class CombinationRepositoryTest extends TestCase
 
     public function testCreate(): void
     {
-        $combinationId = $this->createMock(UuidInterface::class);
+        $combinationId = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $mod1 = $this->createMock(Mod::class);
         $mod2 = $this->createMock(Mod::class);
 
