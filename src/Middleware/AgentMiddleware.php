@@ -21,11 +21,9 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class AgentMiddleware implements MiddlewareInterface
 {
-    private AgentRepository $agentRepository;
-
-    public function __construct(AgentRepository $agentRepository)
-    {
-        $this->agentRepository = $agentRepository;
+    public function __construct(
+        private readonly AgentRepository $agentRepository,
+    ) {
     }
 
     /**

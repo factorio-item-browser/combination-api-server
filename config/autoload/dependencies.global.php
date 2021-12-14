@@ -6,6 +6,7 @@
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
  */
+// phpcs:ignoreFile
 
 declare(strict_types=1);
 
@@ -15,13 +16,10 @@ use BluePsyduck\LaminasAutoWireFactory\AutoWireFactory;
 use Doctrine\Migrations\Configuration\Migration\ConfigurationLoader;
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\ORM\EntityManagerInterface;
-use FactorioItemBrowser\CombinationApi\Server\Constant\ConfigKey;
 use Mezzio\Middleware\ErrorResponseGenerator;
 use Roave\PsrContainerDoctrine\EntityManagerFactory;
 use Roave\PsrContainerDoctrine\Migrations\ConfigurationLoaderFactory;
 use Roave\PsrContainerDoctrine\Migrations\DependencyFactoryFactory;
-
-use function BluePsyduck\LaminasAutoWireFactory\readConfig;
 
 return [
     'dependencies' => [
@@ -66,12 +64,6 @@ return [
             ConfigurationLoader::class => ConfigurationLoaderFactory::class,
             DependencyFactory::class => DependencyFactoryFactory::class,
             EntityManagerInterface::class => EntityManagerFactory::class,
-
-            // Auto-wire helpers
-            'array $requestClassesByRoutes' => readConfig(ConfigKey::MAIN, ConfigKey::REQUEST_CLASSES_BY_ROUTES),
-            'array $agents' => readConfig(ConfigKey::MAIN, ConfigKey::AGENTS),
-            'bool $debug' => readConfig('debug'),
-            'string $version' => readConfig('version'),
         ],
     ],
 ];

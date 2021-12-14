@@ -22,13 +22,10 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class ValidateHandler implements RequestHandlerInterface
 {
-    private CombinationService $combinationService;
-    private ValidationService $validationService;
-
-    public function __construct(CombinationService $combinationService, ValidationService $validationService)
-    {
-        $this->combinationService = $combinationService;
-        $this->validationService = $validationService;
+    public function __construct(
+        private readonly CombinationService $combinationService,
+        private readonly ValidationService $validationService,
+    ) {
     }
 
     /**

@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Middleware;
 
+use BluePsyduck\LaminasAutoWireFactory\Attribute\Alias;
+use BluePsyduck\LaminasAutoWireFactory\Attribute\ReadConfig;
 use Exception;
+use FactorioItemBrowser\CombinationApi\Client\Constant\ServiceName;
+use FactorioItemBrowser\CombinationApi\Server\Constant\ConfigKey;
 use FactorioItemBrowser\CombinationApi\Server\Exception\InvalidRequestBodyException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use JMS\Serializer\SerializerInterface;
@@ -22,19 +26,16 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class RequestDeserializerMiddleware implements MiddlewareInterface
 {
-    private SerializerInterface $combinationApiClientSerializer;
-
-    /** @var array<string, class-string<object>> */
-    private array $requestClassesByRoutes;
-
     /**
      * @param SerializerInterface $combinationApiClientSerializer
      * @param array<string, class-string<object>> $requestClassesByRoutes
      */
-    public function __construct(SerializerInterface $combinationApiClientSerializer, array $requestClassesByRoutes)
-    {
-        $this->combinationApiClientSerializer = $combinationApiClientSerializer;
-        $this->requestClassesByRoutes = $requestClassesByRoutes;
+    public function __construct(
+        #[Alias(ServiceName::SERIALIZER)]
+        private readonly SerializerInterface $combinationApiClientSerializer,
+        #[ReadConfig(ConfigKey::MAIN, ConfigKey::REQUEST_CLASSES_BY_ROUTES)]
+        private readonly array $requestClassesByRoutes,
+    ) {
     }
 
     /**

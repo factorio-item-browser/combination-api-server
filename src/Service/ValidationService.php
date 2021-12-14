@@ -22,11 +22,9 @@ use FactorioItemBrowser\Common\Constant\Constant;
  */
 class ValidationService
 {
-    private ModPortalService $modPortalService;
-
-    public function __construct(ModPortalService $modPortalService)
-    {
-        $this->modPortalService = $modPortalService;
+    public function __construct(
+        private readonly ModPortalService $modPortalService,
+    ) {
     }
 
     /**

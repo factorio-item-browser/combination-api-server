@@ -22,15 +22,10 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class UpdateHandler implements RequestHandlerInterface
 {
-    private JobService $jobService;
-    private MapperManagerInterface $mapperManager;
-
     public function __construct(
-        JobService $jobService,
-        MapperManagerInterface $mapperManager
+        private readonly JobService $jobService,
+        private readonly MapperManagerInterface $mapperManager,
     ) {
-        $this->jobService = $jobService;
-        $this->mapperManager = $mapperManager;
     }
 
     /**

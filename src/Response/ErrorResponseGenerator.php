@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Response;
 
+use BluePsyduck\LaminasAutoWireFactory\Attribute\ReadConfig;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Log\LoggerInterface;
@@ -18,13 +19,11 @@ use Throwable;
  */
 class ErrorResponseGenerator
 {
-    private LoggerInterface $errorLogger;
-    private bool $debug;
-
-    public function __construct(LoggerInterface $errorLogger, bool $debug)
-    {
-        $this->errorLogger = $errorLogger;
-        $this->debug = $debug;
+    public function __construct(
+        private readonly LoggerInterface $errorLogger,
+        #[ReadConfig('debug')]
+        private readonly bool $debug,
+    ) {
     }
 
     public function __invoke(Throwable $exception): ResponseInterface

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8a39dc6d0bf101795f113db19abbb40",
+    "content-hash": "6e4ad506a6181e06751de0517758b197",
     "packages": [
         {
             "name": "bluepsyduck/factorio-mod-portal-client",
@@ -68,29 +68,29 @@
         },
         {
             "name": "bluepsyduck/jms-serializer-factory",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BluePsyduck/jms-serializer-factory.git",
-                "reference": "010f7b01a86b1f62f8532a9324d675392c913a26"
+                "reference": "029dbc46ec9c401882312c7e65aec65d3b7ffe4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BluePsyduck/jms-serializer-factory/zipball/010f7b01a86b1f62f8532a9324d675392c913a26",
-                "reference": "010f7b01a86b1f62f8532a9324d675392c913a26",
+                "url": "https://api.github.com/repos/BluePsyduck/jms-serializer-factory/zipball/029dbc46ec9c401882312c7e65aec65d3b7ffe4d",
+                "reference": "029dbc46ec9c401882312c7e65aec65d3b7ffe4d",
                 "shasum": ""
             },
             "require": {
+                "bluepsyduck/laminas-autowire-factory": "^2.0",
                 "jms/serializer": "^3.0",
-                "php": "^7.4 | ^8.0",
-                "psr/container": "^1.0"
+                "php": "^8.0"
             },
             "require-dev": {
                 "bluepsyduck/test-helper": "^1.0",
                 "mikey179/vfsstream": "^1.6",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-phpunit": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.0",
                 "phpunit/phpunit": "^9.0",
                 "rregeer/phpunit-coverage-check": "^0.3",
                 "squizlabs/php_codesniffer": "^3.4"
@@ -122,35 +122,35 @@
             ],
             "support": {
                 "issues": "https://github.com/BluePsyduck/jms-serializer-factory/issues",
-                "source": "https://github.com/BluePsyduck/jms-serializer-factory/tree/1.0.0"
+                "source": "https://github.com/BluePsyduck/jms-serializer-factory/tree/1.1.0"
             },
-            "time": "2020-12-31T16:18:39+00:00"
+            "time": "2021-12-14T17:43:53+00:00"
         },
         {
             "name": "bluepsyduck/laminas-autowire-factory",
-            "version": "1.1.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BluePsyduck/laminas-autowire-factory.git",
-                "reference": "ceb063703127ceaa5a973508d9b2be0017069fa7"
+                "reference": "e523accc8b1156e72bdc2fab0bfda2cf7a28b434"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BluePsyduck/laminas-autowire-factory/zipball/ceb063703127ceaa5a973508d9b2be0017069fa7",
-                "reference": "ceb063703127ceaa5a973508d9b2be0017069fa7",
+                "url": "https://api.github.com/repos/BluePsyduck/laminas-autowire-factory/zipball/e523accc8b1156e72bdc2fab0bfda2cf7a28b434",
+                "reference": "e523accc8b1156e72bdc2fab0bfda2cf7a28b434",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-servicemanager": "^3.0",
-                "php": "^7.4 | ^8.0"
+                "php": "^8.0"
             },
             "require-dev": {
                 "bluepsyduck/test-helper": "^2.0",
                 "laminas/laminas-config-aggregator": "^1.1",
                 "mikey179/vfsstream": "^1.6",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-phpunit": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.0",
                 "phpunit/phpunit": "^9.0",
                 "rregeer/phpunit-coverage-check": "^0.3",
                 "squizlabs/php_codesniffer": "^3.4"
@@ -159,10 +159,7 @@
             "autoload": {
                 "psr-4": {
                     "BluePsyduck\\LaminasAutoWireFactory\\": "src/"
-                },
-                "files": [
-                    "src/helpers.php"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -185,9 +182,9 @@
             ],
             "support": {
                 "issues": "https://github.com/BluePsyduck/laminas-autowire-factory/issues",
-                "source": "https://github.com/BluePsyduck/laminas-autowire-factory/tree/1.1.1"
+                "source": "https://github.com/BluePsyduck/laminas-autowire-factory/tree/2.0.0"
             },
-            "time": "2021-02-07T08:23:34+00:00"
+            "time": "2021-12-13T17:49:04+00:00"
         },
         {
             "name": "bluepsyduck/mapper-manager",
@@ -1568,32 +1565,30 @@
         },
         {
             "name": "factorio-item-browser/combination-api-client",
-            "version": "1.1.0",
+            "version": "dev-feature/php-81",
             "source": {
                 "type": "git",
                 "url": "https://github.com/factorio-item-browser/combination-api-client.git",
-                "reference": "be2c4e706214fe49d707df0c478c953e38822a03"
+                "reference": "5fd091eac513e10b3a9f3edbe2717c5206cb5e97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/factorio-item-browser/combination-api-client/zipball/be2c4e706214fe49d707df0c478c953e38822a03",
-                "reference": "be2c4e706214fe49d707df0c478c953e38822a03",
+                "url": "https://api.github.com/repos/factorio-item-browser/combination-api-client/zipball/5fd091eac513e10b3a9f3edbe2717c5206cb5e97",
+                "reference": "5fd091eac513e10b3a9f3edbe2717c5206cb5e97",
                 "shasum": ""
             },
             "require": {
-                "bluepsyduck/jms-serializer-factory": "^1.0",
-                "bluepsyduck/laminas-autowire-factory": "^1.0",
-                "ext-json": "*",
-                "guzzlehttp/guzzle": "^6.0 | ^7.0",
+                "bluepsyduck/jms-serializer-factory": "^1.1",
+                "bluepsyduck/laminas-autowire-factory": "^2.0",
+                "guzzlehttp/guzzle": "^7.0",
                 "jms/serializer": "^3.0",
-                "php": "^7.4 | ^8.0",
-                "symfony/yaml": "^5.0"
+                "php": "^8.1"
             },
             "require-dev": {
                 "bluepsyduck/test-helper": "^2.0",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-phpunit": "^0.12",
-                "phpstan/phpstan-strict-rules": "^0.12",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.0",
                 "phpunit/phpunit": "^9.5",
                 "rregeer/phpunit-coverage-check": "^0.3",
                 "squizlabs/php_codesniffer": "^3.5"
@@ -1624,9 +1619,9 @@
                 "combination"
             ],
             "support": {
-                "source": "https://github.com/factorio-item-browser/combination-api-client/tree/1.1.0"
+                "source": "https://github.com/factorio-item-browser/combination-api-client/tree/feature/php-81"
             },
-            "time": "2021-05-27T08:59:11+00:00"
+            "time": "2021-12-14T17:47:54+00:00"
         },
         {
             "name": "factorio-item-browser/common",
@@ -2206,16 +2201,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "3.16.0",
+            "version": "3.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "9b0b5208a6edb20b979c7d95bdda53a46098a7d9"
+                "reference": "6e17603abc16c5b6eed41f51844bc51dda51cf94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/9b0b5208a6edb20b979c7d95bdda53a46098a7d9",
-                "reference": "9b0b5208a6edb20b979c7d95bdda53a46098a7d9",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/6e17603abc16c5b6eed41f51844bc51dda51cf94",
+                "reference": "6e17603abc16c5b6eed41f51844bc51dda51cf94",
                 "shasum": ""
             },
             "require": {
@@ -2236,7 +2231,7 @@
                 "ocramius/proxy-manager": "^1.0|^2.0",
                 "phpbench/phpbench": "^1.0",
                 "phpstan/phpstan": "^1.0.2",
-                "phpunit/phpunit": "^8.0||^9.0",
+                "phpunit/phpunit": "^8.5.21||^9.0",
                 "psr/container": "^1.0",
                 "symfony/dependency-injection": "^3.0|^4.0|^5.0|^6.0",
                 "symfony/expression-language": "^3.2|^4.0|^5.0|^6.0",
@@ -2288,7 +2283,7 @@
             ],
             "support": {
                 "issues": "https://github.com/schmittjoh/serializer/issues",
-                "source": "https://github.com/schmittjoh/serializer/tree/3.16.0"
+                "source": "https://github.com/schmittjoh/serializer/tree/3.17.0"
             },
             "funding": [
                 {
@@ -2296,7 +2291,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-22T07:03:41+00:00"
+            "time": "2021-12-14T15:01:05+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -7583,16 +7578,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.6.1",
+            "version": "3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "f268ca40d54617c6e06757f83f699775c9b3ff2e"
+                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/f268ca40d54617c6e06757f83f699775c9b3ff2e",
-                "reference": "f268ca40d54617c6e06757f83f699775c9b3ff2e",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/5e4e71592f69da17871dba6e80dd51bce74a351a",
+                "reference": "5e4e71592f69da17871dba6e80dd51bce74a351a",
                 "shasum": ""
             },
             "require": {
@@ -7635,7 +7630,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2021-10-11T04:00:11+00:00"
+            "time": "2021-12-12T21:44:58+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -7690,12 +7685,13 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "factorio-item-browser/combination-api-client": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1",
-        "ext-json": "*",
         "ext-pdo": "*"
     },
     "platform-dev": [],

@@ -23,11 +23,9 @@ use GuzzleHttp\Promise\Utils;
  */
 class ModPortalService
 {
-    private ClientInterface $modPortalClient;
-
-    public function __construct(ClientInterface $modPortalClient)
-    {
-        $this->modPortalClient = $modPortalClient;
+    public function __construct(
+        private readonly ClientInterface $modPortalClient
+    ) {
     }
 
     /**

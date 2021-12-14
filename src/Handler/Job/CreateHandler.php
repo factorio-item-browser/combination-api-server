@@ -23,18 +23,11 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class CreateHandler implements RequestHandlerInterface
 {
-    private CombinationService $combinationService;
-    private JobService $jobService;
-    private MapperManagerInterface $mapperManager;
-
     public function __construct(
-        CombinationService $combinationService,
-        JobService $jobService,
-        MapperManagerInterface $mapperManager
+        private readonly CombinationService $combinationService,
+        private readonly JobService $jobService,
+        private readonly MapperManagerInterface $mapperManager,
     ) {
-        $this->combinationService = $combinationService;
-        $this->jobService = $jobService;
-        $this->mapperManager = $mapperManager;
     }
 
     /**

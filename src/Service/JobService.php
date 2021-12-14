@@ -26,13 +26,10 @@ use Ramsey\Uuid\Uuid;
  */
 class JobService
 {
-    private AgentRepository $agentRepository;
-    private JobRepository $jobRepository;
-
-    public function __construct(AgentRepository $agentRepository, JobRepository $jobRepository)
-    {
-        $this->agentRepository = $agentRepository;
-        $this->jobRepository = $jobRepository;
+    public function __construct(
+        private readonly AgentRepository $agentRepository,
+        private readonly JobRepository $jobRepository,
+    ) {
     }
 
     /**

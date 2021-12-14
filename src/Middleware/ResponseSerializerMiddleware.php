@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Middleware;
 
+use BluePsyduck\LaminasAutoWireFactory\Attribute\Alias;
+use FactorioItemBrowser\CombinationApi\Client\Constant\ServiceName;
 use FactorioItemBrowser\CombinationApi\Server\Response\ClientResponse;
 use JMS\Serializer\SerializerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -19,11 +21,10 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class ResponseSerializerMiddleware implements MiddlewareInterface
 {
-    private SerializerInterface $combinationApiClientSerializer;
-
-    public function __construct(SerializerInterface $combinationApiClientSerializer)
-    {
-        $this->combinationApiClientSerializer = $combinationApiClientSerializer;
+    public function __construct(
+        #[Alias(ServiceName::SERIALIZER)]
+        private readonly SerializerInterface $combinationApiClientSerializer,
+    ) {
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

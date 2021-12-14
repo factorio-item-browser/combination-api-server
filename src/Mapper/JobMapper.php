@@ -25,11 +25,9 @@ class JobMapper implements DynamicMapperInterface, MapperManagerAwareInterface
 {
     use MapperManagerAwareTrait;
 
-    private QueuePositionHelper $queuePositionHelper;
-
-    public function __construct(QueuePositionHelper $queuePositionHelper)
-    {
-        $this->queuePositionHelper = $queuePositionHelper;
+    public function __construct(
+        private readonly QueuePositionHelper $queuePositionHelper,
+    ) {
     }
 
     public function supports(object $source, object $destination): bool

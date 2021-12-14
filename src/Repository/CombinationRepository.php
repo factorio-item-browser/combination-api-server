@@ -19,11 +19,9 @@ use Ramsey\Uuid\UuidInterface;
  */
 class CombinationRepository
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+    ) {
     }
 
     /**
