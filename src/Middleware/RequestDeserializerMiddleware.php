@@ -11,6 +11,7 @@ use FactorioItemBrowser\CombinationApi\Client\Constant\ServiceName;
 use FactorioItemBrowser\CombinationApi\Server\Constant\ConfigKey;
 use FactorioItemBrowser\CombinationApi\Server\Exception\InvalidRequestBodyException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
+use FactorioItemBrowser\CombinationApi\Server\Tracking\Event\RequestEvent;
 use JMS\Serializer\SerializerInterface;
 use Mezzio\Router\RouteResult;
 use Psr\Http\Message\ResponseInterface;
@@ -49,6 +50,10 @@ class RequestDeserializerMiddleware implements MiddlewareInterface
         /** @var RouteResult $routeResult */
         $routeResult = $request->getAttribute(RouteResult::class);
         $requestClass = $this->requestClassesByRoutes[$routeResult->getMatchedRouteName()] ?? '';
+
+        /** @var RequestEvent $trackingRequestEvent */
+        $trackingRequestEvent = $request->getAttribute(RequestEvent::class);
+        $trackingRequestEvent->routeName = (string) $routeResult->getMatchedRouteName();
 
         if ($request->getHeaderLine('Content-Type') === 'application/json' && $requestClass !== '') {
             try {

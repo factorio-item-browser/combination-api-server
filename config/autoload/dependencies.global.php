@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server;
 
+use BluePsyduck\Ga4MeasurementProtocol\ClientInterface;
 use BluePsyduck\LaminasAutoWireFactory\AutoWireFactory;
 use Doctrine\Migrations\Configuration\Migration\ConfigurationLoader;
 use Doctrine\Migrations\DependencyFactory;
@@ -46,6 +47,7 @@ return [
             Middleware\MetaMiddleware::class => AutoWireFactory::class,
             Middleware\RequestDeserializerMiddleware::class => AutoWireFactory::class,
             Middleware\ResponseSerializerMiddleware::class => AutoWireFactory::class,
+            Middleware\TrackingMiddleware::class => AutoWireFactory::class,
 
             Repository\AgentRepository::class => AutoWireFactory::class,
             Repository\CombinationRepository::class => AutoWireFactory::class,
@@ -58,9 +60,11 @@ return [
             Service\JobService::class => AutoWireFactory::class,
             Service\ModPortalService::class => AutoWireFactory::class,
             Service\ModService::class => AutoWireFactory::class,
+            Service\TrackingService::class => AutoWireFactory::class,
             Service\ValidationService::class => AutoWireFactory::class,
 
             // 3rd-party dependencies
+            ClientInterface::class => Tracking\ClientFactory::class,
             ConfigurationLoader::class => ConfigurationLoaderFactory::class,
             DependencyFactory::class => DependencyFactoryFactory::class,
             EntityManagerInterface::class => EntityManagerFactory::class,

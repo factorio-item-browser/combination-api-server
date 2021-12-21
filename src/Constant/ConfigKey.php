@@ -20,4 +20,8 @@ interface ConfigKey
     public const AGENT_ACCESS_KEY = 'access-key';
     public const AGENT_CAN_CREATE_JOBS = 'can-create-jobs';
     public const AGENT_CAN_UPDATE_JOBS = 'can-update-jobs';
+
+    public const TRACKING = 'tracking';
+    public const TRACKING_MEASUREMENT_ID = 'measurement-id';
+    public const TRACKING_API_SECRET = 'api-secret';
 }

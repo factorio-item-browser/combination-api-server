@@ -15,6 +15,7 @@
     "php": "^8.1",
     "ext-pdo": "*",
     "bluepsyduck/factorio-mod-portal-client": "^1.4",
+    "bluepsyduck/ga4-measurement-protocol": "^2.0",
     "bluepsyduck/laminas-autowire-factory": "^2.0",
     "bluepsyduck/mapper-manager": "^1.2",
     "doctrine/orm": "^2.6",

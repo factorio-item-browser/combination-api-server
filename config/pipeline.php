@@ -24,6 +24,7 @@ use Psr\Container\ContainerInterface;
 
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->pipe(Middleware\MetaMiddleware::class);
+    $app->pipe(Middleware\TrackingMiddleware::class);
     $app->pipe(ErrorHandler::class);
 
     $app->pipe(ServerUrlMiddleware::class);
