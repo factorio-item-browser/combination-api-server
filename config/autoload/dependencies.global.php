@@ -34,7 +34,6 @@ return [
             Handler\Job\DetailsHandler::class => AutoWireFactory::class,
             Handler\Job\ListHandler::class => AutoWireFactory::class,
             Handler\Job\UpdateHandler::class => AutoWireFactory::class,
-            Handler\NotFoundHandler::class => AutoWireFactory::class,
 
             Helper\CombinationIdCalculator::class => AutoWireFactory::class,
             Helper\QueuePositionHelper::class => AutoWireFactory::class,
@@ -45,6 +44,7 @@ return [
 
             Middleware\AgentMiddleware::class => AutoWireFactory::class,
             Middleware\MetaMiddleware::class => AutoWireFactory::class,
+            Middleware\RejectUnknownRoutesMiddleware::class => AutoWireFactory::class,
             Middleware\RequestDeserializerMiddleware::class => AutoWireFactory::class,
             Middleware\ResponseSerializerMiddleware::class => AutoWireFactory::class,
             Middleware\TrackingMiddleware::class => AutoWireFactory::class,
