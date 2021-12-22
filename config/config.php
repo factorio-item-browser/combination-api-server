@@ -27,7 +27,6 @@ $aggregator = new ConfigAggregator([
     \BluePsyduck\MapperManager\ConfigProvider::class,
     \FactorioItemBrowser\CombinationApi\Client\ConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
-    \Laminas\Log\ConfigProvider::class,
     \Mezzio\ConfigProvider::class,
     \Mezzio\Helper\ConfigProvider::class,
     \Mezzio\Router\ConfigProvider::class,

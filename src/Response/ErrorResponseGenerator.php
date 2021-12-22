@@ -7,8 +7,8 @@ namespace FactorioItemBrowser\CombinationApi\Server\Response;
 use BluePsyduck\LaminasAutoWireFactory\Attribute\ReadConfig;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use Laminas\Diactoros\Response\JsonResponse;
-use Laminas\Log\LoggerInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 /**
@@ -20,7 +20,7 @@ use Throwable;
 class ErrorResponseGenerator
 {
     public function __construct(
-        private readonly LoggerInterface $errorLogger,
+        private readonly LoggerInterface $logger,
         #[ReadConfig('debug')]
         private readonly bool $debug,
     ) {
@@ -30,7 +30,7 @@ class ErrorResponseGenerator
     {
         $statusCode = $exception instanceof ServerException ? $exception->getCode() : 500;
         if (floor($statusCode / 100) === 5.) {
-            $this->errorLogger->crit($exception);
+            $this->logger->critical($exception->getMessage(), ['exception' => $exception]);
         }
 
         if ($this->debug) {

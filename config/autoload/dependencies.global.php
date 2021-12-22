@@ -18,6 +18,8 @@ use Doctrine\Migrations\Configuration\Migration\ConfigurationLoader;
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Mezzio\Middleware\ErrorResponseGenerator;
+use MonologFactory\DiContainerLoggerFactory;
+use Psr\Log\LoggerInterface;
 use Roave\PsrContainerDoctrine\EntityManagerFactory;
 use Roave\PsrContainerDoctrine\Migrations\ConfigurationLoaderFactory;
 use Roave\PsrContainerDoctrine\Migrations\DependencyFactoryFactory;
@@ -68,6 +70,7 @@ return [
             ConfigurationLoader::class => ConfigurationLoaderFactory::class,
             DependencyFactory::class => DependencyFactoryFactory::class,
             EntityManagerInterface::class => EntityManagerFactory::class,
+            LoggerInterface::class => [DiContainerLoggerFactory::class, 'app'],
         ],
     ],
 ];
