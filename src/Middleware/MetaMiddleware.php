@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Middleware;
 
+use BluePsyduck\LaminasAutoWireFactory\Attribute\ReadConfig;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -17,12 +18,12 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class MetaMiddleware implements MiddlewareInterface
 {
-    private string $version;
-    private float $startTime;
+    private readonly float $startTime;
 
-    public function __construct(string $version)
-    {
-        $this->version = $version;
+    public function __construct(
+        #[ReadConfig('version')]
+        private readonly string $version,
+    ) {
         $this->startTime = microtime(true);
     }
 

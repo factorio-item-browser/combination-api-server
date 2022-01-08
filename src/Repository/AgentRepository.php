@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Repository;
 
+use BluePsyduck\LaminasAutoWireFactory\Attribute\ReadConfig;
 use FactorioItemBrowser\CombinationApi\Server\Constant\ConfigKey;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Agent;
 
@@ -16,14 +17,16 @@ use FactorioItemBrowser\CombinationApi\Server\Entity\Agent;
 class AgentRepository
 {
     /** @var array<Agent> */
-    private array $agents;
+    private readonly array $agents;
     private Agent $currentAgent;
 
     /**
      * @param array<mixed> $agents
      */
-    public function __construct(array $agents)
-    {
+    public function __construct(
+        #[ReadConfig(ConfigKey::MAIN, ConfigKey::AGENTS)]
+        array $agents
+    ) {
         $this->agents = array_map([$this, 'createAgent'], $agents);
     }
 

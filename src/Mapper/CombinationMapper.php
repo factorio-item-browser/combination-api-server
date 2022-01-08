@@ -19,11 +19,9 @@ use FactorioItemBrowser\CombinationApi\Server\Helper\CombinationIdCalculator;
  */
 class CombinationMapper implements DynamicMapperInterface
 {
-    private CombinationIdCalculator $combinationIdCalculator;
-
-    public function __construct(CombinationIdCalculator $combinationIdCalculator)
-    {
-        $this->combinationIdCalculator = $combinationIdCalculator;
+    public function __construct(
+        private readonly CombinationIdCalculator $combinationIdCalculator,
+    ) {
     }
 
     public function supports(object $source, object $destination): bool

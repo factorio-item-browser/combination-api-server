@@ -24,6 +24,7 @@ use Psr\Container\ContainerInterface;
 
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->pipe(Middleware\MetaMiddleware::class);
+    $app->pipe(Middleware\TrackingMiddleware::class);
     $app->pipe(ErrorHandler::class);
 
     $app->pipe(ServerUrlMiddleware::class);
@@ -32,10 +33,10 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->pipe(ImplicitHeadMiddleware::class);
     $app->pipe(ImplicitOptionsMiddleware::class);
 
+    $app->pipe(Middleware\RejectUnknownRoutesMiddleware::class);
     $app->pipe(Middleware\AgentMiddleware::class);
     $app->pipe(Middleware\RequestDeserializerMiddleware::class);
     $app->pipe(Middleware\ResponseSerializerMiddleware::class);
 
     $app->pipe(DispatchMiddleware::class);
-    $app->pipe(Handler\NotFoundHandler::class);
 };

@@ -8,6 +8,7 @@ use FactorioItemBrowser\CombinationApi\Client\Constant\HeaderName;
 use FactorioItemBrowser\CombinationApi\Server\Exception\InvalidApiKeyException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use FactorioItemBrowser\CombinationApi\Server\Repository\AgentRepository;
+use FactorioItemBrowser\CombinationApi\Server\Tracking\Event\RequestEvent;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -21,11 +22,9 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class AgentMiddleware implements MiddlewareInterface
 {
-    private AgentRepository $agentRepository;
-
-    public function __construct(AgentRepository $agentRepository)
-    {
-        $this->agentRepository = $agentRepository;
+    public function __construct(
+        private readonly AgentRepository $agentRepository,
+    ) {
     }
 
     /**
@@ -46,6 +45,11 @@ class AgentMiddleware implements MiddlewareInterface
         }
 
         $this->agentRepository->setCurrentAgent($agent);
+
+        /** @var RequestEvent $trackingRequestEvent */
+        $trackingRequestEvent = $request->getAttribute(RequestEvent::class);
+        $trackingRequestEvent->agentName = $agent->getName();
+
         return $handler->handle($request);
     }
 }

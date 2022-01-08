@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use FactorioItemBrowser\CombinationApi\Server\Entity\Job;
 use FactorioItemBrowser\CombinationApi\Server\Entity\JobChange;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\Uuid;
 
 /**
  * The PHPUnit test of the JobChange class.
@@ -21,7 +21,7 @@ class JobChangeTest extends TestCase
 {
     public function testSetAndGetId(): void
     {
-        $id = $this->createMock(UuidInterface::class);
+        $id = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $instance = new JobChange();
 
         $this->assertSame($instance, $instance->setId($id));

@@ -21,13 +21,10 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class StatusHandler implements RequestHandlerInterface
 {
-    private CombinationService $combinationService;
-    private MapperManagerInterface $mapperManager;
-
-    public function __construct(CombinationService $combinationService, MapperManagerInterface $mapperManager)
-    {
-        $this->combinationService = $combinationService;
-        $this->mapperManager = $mapperManager;
+    public function __construct(
+        private readonly CombinationService $combinationService,
+        private readonly MapperManagerInterface $mapperManager,
+    ) {
     }
 
     /**

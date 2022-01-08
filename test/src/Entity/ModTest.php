@@ -6,7 +6,7 @@ namespace FactorioItemBrowserTest\CombinationApi\Server\Entity;
 
 use FactorioItemBrowser\CombinationApi\Server\Entity\Mod;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\Uuid;
 
 /**
  * The PHPUnit test of the Mod class.
@@ -19,7 +19,7 @@ class ModTest extends TestCase
 {
     public function testSetAndGetId(): void
     {
-        $id = $this->createMock(UuidInterface::class);
+        $id = Uuid::fromString('01234567-89ab-cdef-0123-456789abcdef');
         $instance = new Mod();
 
         $this->assertSame($instance, $instance->setId($id));

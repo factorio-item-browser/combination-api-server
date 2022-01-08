@@ -1,10 +1,9 @@
 parameters:
-  level: max
+  level: 8
   paths:
     - src
     - test/src
   ignoreErrors:
-    - '#Parameter \#1 \$message of method Laminas\\Log\\LoggerInterface::.*\(\) expects string, .* given.#'
     - '#Dynamic call to static method PHPUnit\\Framework\\.*#'
 
 includes:

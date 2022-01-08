@@ -22,18 +22,11 @@ use Ramsey\Uuid\UuidInterface;
  */
 class CombinationService
 {
-    private CombinationIdCalculator $combinationIdCalculator;
-    private CombinationRepository $combinationRepository;
-    private ModService $modService;
-
     public function __construct(
-        CombinationIdCalculator $combinationIdCalculator,
-        CombinationRepository $combinationRepository,
-        ModService $modService
+        private readonly CombinationIdCalculator $combinationIdCalculator,
+        private readonly CombinationRepository $combinationRepository,
+        private readonly ModService $modService,
     ) {
-        $this->combinationIdCalculator = $combinationIdCalculator;
-        $this->combinationRepository = $combinationRepository;
-        $this->modService = $modService;
     }
 
     /**

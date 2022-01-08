@@ -23,5 +23,9 @@ return [
                 ConfigKey::AGENT_CAN_UPDATE_JOBS => true,
             ],
         ],
+        ConfigKey::TRACKING => [
+            ConfigKey::TRACKING_MEASUREMENT_ID => '',
+            ConfigKey::TRACKING_API_SECRET => '',
+        ],
     ],
 ];

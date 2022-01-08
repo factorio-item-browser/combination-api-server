@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace FactorioItemBrowser\CombinationApi\Server;
 
 use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Ramsey\Uuid\Doctrine\UuidBinaryType;
 
 return [
@@ -27,10 +27,10 @@ return [
         ],
         'driver' => [
             'orm_default' => [
-                'class' => SimplifiedXmlDriver::class,
+                'class' => AttributeDriver::class,
                 'cache' => 'array',
                 'paths' => [
-                    'config/doctrine' => 'FactorioItemBrowser\CombinationApi\Server\Entity',
+                    'src/Entity',
                 ],
             ],
         ],

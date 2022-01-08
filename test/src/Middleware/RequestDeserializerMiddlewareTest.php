@@ -8,6 +8,7 @@ use Exception;
 use FactorioItemBrowser\CombinationApi\Server\Exception\InvalidRequestBodyException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use FactorioItemBrowser\CombinationApi\Server\Middleware\RequestDeserializerMiddleware;
+use FactorioItemBrowser\CombinationApi\Server\Tracking\Event\RequestEvent;
 use JMS\Serializer\SerializerInterface;
 use Laminas\Diactoros\Stream;
 use Mezzio\Router\RouteResult;
@@ -42,19 +43,25 @@ class RequestDeserializerMiddlewareTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
 
         $routeResult = $this->createMock(RouteResult::class);
-        $routeResult->expects($this->once())
+        $routeResult->expects($this->any())
                     ->method('getMatchedRouteName')
                     ->willReturn($matchedRouteName);
+
+        $trackingRequestEvent = new RequestEvent();
+        $expectedTrackingRequestEvent = new RequestEvent();
+        $expectedTrackingRequestEvent->routeName = $matchedRouteName;
 
         $requestBodyStream = new Stream('php://temp', 'wb+');
         $requestBodyStream->write($requestBody);
         $requestBodyStream->rewind();
 
         $request = $this->createMock(ServerRequestInterface::class);
-        $request->expects($this->once())
+        $request->expects($this->any())
                 ->method('getAttribute')
-                ->with($this->identicalTo(RouteResult::class))
-                ->willReturn($routeResult);
+                ->willReturnMap([
+                    [RouteResult::class, null, $routeResult],
+                    [RequestEvent::class, null, $trackingRequestEvent],
+                ]);
         $request->expects($this->once())
                 ->method('getHeaderLine')
                 ->with($this->identicalTo('Content-Type'))
@@ -87,6 +94,7 @@ class RequestDeserializerMiddlewareTest extends TestCase
         $result = $instance->process($request, $handler);
 
         $this->assertSame($response, $result);
+        $this->assertEquals($trackingRequestEvent, $expectedTrackingRequestEvent);
     }
 
     /**
@@ -102,7 +110,7 @@ class RequestDeserializerMiddlewareTest extends TestCase
         $requestBody = 'def';
 
         $routeResult = $this->createMock(RouteResult::class);
-        $routeResult->expects($this->once())
+        $routeResult->expects($this->any())
                     ->method('getMatchedRouteName')
                     ->willReturn($matchedRouteName);
 
@@ -110,11 +118,15 @@ class RequestDeserializerMiddlewareTest extends TestCase
         $requestBodyStream->write($requestBody);
         $requestBodyStream->rewind();
 
+        $trackingRequestEvent = new RequestEvent();
+
         $request = $this->createMock(ServerRequestInterface::class);
-        $request->expects($this->once())
+        $request->expects($this->any())
                 ->method('getAttribute')
-                ->with($this->identicalTo(RouteResult::class))
-                ->willReturn($routeResult);
+                ->willReturnMap([
+                    [RouteResult::class, null, $routeResult],
+                    [RequestEvent::class, null, $trackingRequestEvent],
+                ]);
         $request->expects($this->once())
                 ->method('getHeaderLine')
                 ->with($this->identicalTo('Content-Type'))
@@ -153,15 +165,19 @@ class RequestDeserializerMiddlewareTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
 
         $routeResult = $this->createMock(RouteResult::class);
-        $routeResult->expects($this->once())
+        $routeResult->expects($this->any())
                     ->method('getMatchedRouteName')
                     ->willReturn($matchedRouteName);
 
+        $trackingRequestEvent = new RequestEvent();
+
         $request = $this->createMock(ServerRequestInterface::class);
-        $request->expects($this->once())
+        $request->expects($this->any())
                 ->method('getAttribute')
-                ->with($this->identicalTo(RouteResult::class))
-                ->willReturn($routeResult);
+                ->willReturnMap([
+                    [RouteResult::class, null, $routeResult],
+                    [RequestEvent::class, null, $trackingRequestEvent],
+                ]);
         $request->expects($this->once())
                 ->method('getHeaderLine')
                 ->with($this->identicalTo('Content-Type'))

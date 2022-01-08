@@ -10,6 +10,7 @@ use FactorioItemBrowser\CombinationApi\Server\Exception\InvalidApiKeyException;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use FactorioItemBrowser\CombinationApi\Server\Middleware\AgentMiddleware;
 use FactorioItemBrowser\CombinationApi\Server\Repository\AgentRepository;
+use FactorioItemBrowser\CombinationApi\Server\Tracking\Event\RequestEvent;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -30,14 +31,25 @@ class AgentMiddlewareTest extends TestCase
     public function testProcess(): void
     {
         $apiKey = 'abc';
-        $agent = $this->createMock(Agent::class);
+        $agentName = 'def';
+        $agent = new Agent();
+        $agent->setName($agentName);
+
         $response = $this->createMock(ResponseInterface::class);
+
+        $trackingRequestEvent = new RequestEvent();
+        $expectedTrackingRequestEvent = new RequestEvent();
+        $expectedTrackingRequestEvent->agentName = $agentName;
 
         $request = $this->createMock(ServerRequestInterface::class);
         $request->expects($this->any())
                 ->method('getHeaderLine')
                 ->with($this->identicalTo(HeaderName::API_KEY))
                 ->willReturn($apiKey);
+        $request->expects($this->once())
+                ->method('getAttribute')
+                ->with($this->identicalTo(RequestEvent::class))
+                ->willReturn($trackingRequestEvent);
 
         $agentRepository = $this->createMock(AgentRepository::class);
         $agentRepository->expects($this->once())
@@ -58,6 +70,7 @@ class AgentMiddlewareTest extends TestCase
         $result = $instance->process($request, $handler);
 
         $this->assertSame($response, $result);
+        $this->assertEquals($expectedTrackingRequestEvent, $trackingRequestEvent);
     }
 
     /**

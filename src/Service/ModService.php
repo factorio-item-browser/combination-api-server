@@ -15,11 +15,9 @@ use FactorioItemBrowser\CombinationApi\Server\Repository\ModRepository;
  */
 class ModService
 {
-    private ModRepository $modRepository;
-
-    public function __construct(ModRepository $modRepository)
-    {
-        $this->modRepository = $modRepository;
+    public function __construct(
+        private readonly ModRepository $modRepository,
+    ) {
     }
 
     /**

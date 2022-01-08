@@ -19,13 +19,12 @@ class QueuePositionHelper
 {
     private const MAX_QUEUE_POSITION = 10;
 
-    private JobRepository $jobRepository;
     /** @var array<string, int> */
     private array $queuePositions;
 
-    public function __construct(JobRepository $jobRepository)
-    {
-        $this->jobRepository = $jobRepository;
+    public function __construct(
+        private readonly JobRepository $jobRepository,
+    ) {
     }
 
     /**

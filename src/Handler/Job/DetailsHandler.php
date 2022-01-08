@@ -21,13 +21,10 @@ use Psr\Http\Server\RequestHandlerInterface;
  */
 class DetailsHandler implements RequestHandlerInterface
 {
-    private JobService $jobService;
-    private MapperManagerInterface $mapperManager;
-
-    public function __construct(JobService $jobService, MapperManagerInterface $mapperManager)
-    {
-        $this->jobService = $jobService;
-        $this->mapperManager = $mapperManager;
+    public function __construct(
+        private readonly JobService $jobService,
+        private readonly MapperManagerInterface $mapperManager,
+    ) {
     }
 
     /**

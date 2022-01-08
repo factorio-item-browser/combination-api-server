@@ -20,7 +20,7 @@ use Tuupola\Base62;
  */
 class CombinationIdCalculator
 {
-    private Base62 $base62;
+    private readonly Base62 $base62;
 
     public function __construct()
     {

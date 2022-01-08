@@ -8,8 +8,8 @@ use Exception;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use FactorioItemBrowser\CombinationApi\Server\Response\ErrorResponseGenerator;
 use Laminas\Diactoros\Response\JsonResponse;
-use Laminas\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 /**
@@ -60,8 +60,8 @@ class ErrorResponseGeneratorTest extends TestCase
     ): void {
         $errorLogger = $this->createMock(LoggerInterface::class);
         $errorLogger->expects($expectLog ? $this->once() : $this->never())
-                    ->method('crit')
-                    ->with($this->identicalTo($exception));
+                    ->method('critical')
+                    ->with($this->identicalTo('test exception'), $this->identicalTo(['exception' => $exception]));
 
         $instance = new ErrorResponseGenerator($errorLogger, $debug);
         $response = $instance($exception);

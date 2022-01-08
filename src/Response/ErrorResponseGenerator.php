@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace FactorioItemBrowser\CombinationApi\Server\Response;
 
+use BluePsyduck\LaminasAutoWireFactory\Attribute\ReadConfig;
 use FactorioItemBrowser\CombinationApi\Server\Exception\ServerException;
 use Laminas\Diactoros\Response\JsonResponse;
-use Laminas\Log\LoggerInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 /**
@@ -18,20 +19,18 @@ use Throwable;
  */
 class ErrorResponseGenerator
 {
-    private LoggerInterface $errorLogger;
-    private bool $debug;
-
-    public function __construct(LoggerInterface $errorLogger, bool $debug)
-    {
-        $this->errorLogger = $errorLogger;
-        $this->debug = $debug;
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        #[ReadConfig('debug')]
+        private readonly bool $debug,
+    ) {
     }
 
     public function __invoke(Throwable $exception): ResponseInterface
     {
         $statusCode = $exception instanceof ServerException ? $exception->getCode() : 500;
         if (floor($statusCode / 100) === 5.) {
-            $this->errorLogger->crit($exception);
+            $this->logger->critical($exception->getMessage(), ['exception' => $exception]);
         }
 
         if ($this->debug) {

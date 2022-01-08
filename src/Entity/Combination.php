@@ -7,7 +7,19 @@ namespace FactorioItemBrowser\CombinationApi\Server\Entity;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\InverseJoinColumn;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\OrderBy;
+use Doctrine\ORM\Mapping\Table;
 use FactorioItemBrowser\CombinationApi\Client\Constant\JobStatus;
+use Ramsey\Uuid\Doctrine\UuidBinaryType;
 use Ramsey\Uuid\UuidInterface;
 
 /**
@@ -16,14 +28,35 @@ use Ramsey\Uuid\UuidInterface;
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
  */
+#[Entity]
+#[Table(options: [
+    'charset' => 'utf8mb4',
+    'collation' => 'utf8mb4_bin',
+    'comment' => 'The table holding the combinations.',
+])]
 class Combination
 {
+    #[Id]
+    #[Column(type: UuidBinaryType::NAME, options: ['comment' => 'The id of the combination.'])]
     private UuidInterface $id;
+
+    #[Column(
+        type: Types::DATETIME_MUTABLE,
+        nullable: true,
+        options: ['comment' => 'The time when the combination was last exported.'],
+    )]
     private ?DateTimeInterface $exportTime = null;
 
     /** @var Collection<int, Mod> */
+    #[ManyToMany(targetEntity: Mod::class)]
+    #[JoinTable(name: 'CombinationXMod')]
+    #[JoinColumn(name: 'combinationId', nullable: false)]
+    #[InverseJoinColumn(name: 'modId', nullable: false)]
+    #[OrderBy(['name' => 'ASC'])]
     private Collection $mods;
+
     /** @var Collection<int, Job> */
+    #[OneToMany(mappedBy: 'combination', targetEntity: Job::class)]
     private Collection $jobs;
 
     public function __construct()
