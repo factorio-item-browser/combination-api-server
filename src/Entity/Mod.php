@@ -21,10 +21,10 @@ use Ramsey\Uuid\UuidInterface;
 #[Entity]
 #[Table(name: '`Mod`', options: [
     'charset' => 'utf8mb4',
-    'collate' => 'utf8mb4_bin',
+    'collation' => 'utf8mb4_bin',
     'comment' => 'The table holding the mods.',
 ])]
-#[UniqueConstraint(name: 'uq_Mod_name', columns: ['name'])]
+#[UniqueConstraint(columns: ['name'])]
 class Mod
 {
     #[Id]
