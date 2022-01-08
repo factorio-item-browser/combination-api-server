@@ -20,7 +20,7 @@
     "bluepsyduck/mapper-manager": "^1.2",
     "doctrine/orm": "^2.6",
     "factorio-item-browser/common": "^1.3",
-    "factorio-item-browser/combination-api-client": "dev-feature/php-81",
+    "factorio-item-browser/combination-api-client": "^1.2",
     "laminas/laminas-config-aggregator": "^1.4",
     "laminas/laminas-diactoros": "^2.5",
     "laminas/laminas-servicemanager": "^3.5",
@@ -64,7 +64,7 @@
     "phpcs": "phpcs -p --colors",
     "phpstan": "phpstan analyse --no-interaction --ansi",
     "post-autoload-dump": [
-      "mkdir -p data/cache data/log && chmod 0777 data/cache data/log"
+      "mkdir -m a=rwx -p data/cache data/logs"
     ],
     "test-unit": "phpunit --testsuite unit-test --colors=always --coverage-html=test/coverage --coverage-clover=test/coverage/clover.xml",
     "test": [

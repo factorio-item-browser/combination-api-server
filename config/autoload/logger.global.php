@@ -22,7 +22,7 @@ return [
                 [
                     'name' => StreamHandler::class,
                     'params' => [
-                        'stream' => 'data/log/app.log',
+                        'stream' => 'data/logs/app.log',
                     ],
                     'formatter' => [
                         'name' => LineFormatter::class,
