@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.2.0 - 2022-01-08
+
+### Added
+
+- Google Analytics tracking for the requests.
+
+### Changed
+
+- Upgraded the dependencies. Modernized codebase.
+- Doctrine configuration from XML files to attributes.
+- Logging library from Laminas Log to Monolog.
+
+### Removed
+
+- Support for PHP 8.0. The minimal required version is now PHP 8.1.
+
 ## 1.1.2 - 2021-07-21
 
 ### Fixed
