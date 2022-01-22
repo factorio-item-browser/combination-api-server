@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.1 - 2022-01-22
+
+### Added
+
+- CORS headers.
+
+### Fixed
+
+- Authorization via Api-Key in the OpenAPI document.
+
 ## 1.2.0 - 2022-01-08
 
 ### Added

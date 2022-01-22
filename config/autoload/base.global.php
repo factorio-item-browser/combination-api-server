@@ -16,5 +16,5 @@ use Laminas\ConfigAggregator\ConfigAggregator;
 return [
     ConfigAggregator::ENABLE_CACHE => true,
     'debug' => false,
-    'version' => '1.2.0',
+    'version' => '1.2.1',
 ];
