@@ -45,6 +45,7 @@ return [
             Mapper\JobMapper::class => AutoWireFactory::class,
 
             Middleware\AgentMiddleware::class => AutoWireFactory::class,
+            Middleware\CorsHeaderMiddleware::class => AutoWireFactory::class,
             Middleware\MetaMiddleware::class => AutoWireFactory::class,
             Middleware\RejectUnknownRoutesMiddleware::class => AutoWireFactory::class,
             Middleware\RequestDeserializerMiddleware::class => AutoWireFactory::class,
